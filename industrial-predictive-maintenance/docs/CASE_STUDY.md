@@ -5,7 +5,7 @@
 ---
 
 ## 1. Executive Summary & Problem Statement
-Optima AutoParts was experiencing severe unplanned downtime at their primary stamping plant in Stuttgart, Germany. Failure of critical hydraulic pumps and air compressors was costing them **$250,000 per month** in halted assembly lines, expedited shipping penalties, and emergency repairs. Maintenance was strictly reactive: technicians repaired machines only after physical failure occurred. The customer approached us with an ambiguous mandate: *"Use AI to eliminate machine downtime."*
+Optima AutoParts was experiencing severe unplanned downtime at their primary stamping plant in Stuttgart, Germany. Failure of critical hydraulic pumps and air compressors was costing them **₹2,25,00,000 INR per month** (approx. 2.25 Crores, equivalent to €250,000) in halted assembly lines, expedited shipping penalties, and emergency repairs. Maintenance was strictly reactive: technicians repaired machines only after physical failure occurred. The customer approached us with an ambiguous mandate: *"Use AI to eliminate machine downtime."*
 
 ---
 
@@ -66,4 +66,4 @@ For a production deployment with 5,000+ machines, we would implement the followi
 *   **False Positive Rate (FPR)**: Restricted to **3.2%** during baseline testing, avoiding alarm fatigue.
 *   **Business Success Metrics**:
     *   **MTTR Reduction**: AI-generated explanations cut root-cause analysis time from 4 hours to under 15 minutes.
-    *   **Projected ROI**: Projected to reduce unplanned downtime by **40%**, representing **$100,000/month in net savings** for the plant.
+    *   **Projected ROI**: Projected to reduce unplanned downtime by **60%**, representing **₹90,00,000 INR/month in net savings** (90 Lakhs/month) for the plant.
