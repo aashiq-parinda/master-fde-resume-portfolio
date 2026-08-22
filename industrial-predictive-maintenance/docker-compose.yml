@@ -1,0 +1,38 @@
+version: '3.8'
+
+services:
+  timescaledb:
+    image: timescale/timescaledb:latest-pg15
+    container_name: factory_timescaledb
+    environment:
+      - POSTGRES_DB=factory_db
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=secure_admin_pass_123!
+    ports:
+      - "127.0.0.1:5432:5432" # Bind only to localhost on the host
+    volumes:
+      - timescale_data:/var/lib/postgresql/data
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:7-alpine
+    container_name: factory_redis
+    ports:
+      - "127.0.0.1:6379:6379" # Bind only to localhost on the host
+    volumes:
+      - redis_data:/data
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  timescale_data:
+  redis_data:

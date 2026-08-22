@@ -1,0 +1,24 @@
+# Python caches and compiles
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+
+# Virtual Environments
+.venv/
+env/
+venv/
+ENV/
+
+# Local configurations and secrets
+.env
+.env.local
+.env.*.local
+
+# Database / Volume directories
+timescale_data/
+redis_data/
+
+# OS specific files
+.DS_Store
+Thumbs.db
