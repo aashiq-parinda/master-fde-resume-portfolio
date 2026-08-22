@@ -63,7 +63,7 @@ if os.path.exists(logo_path):
         st.sidebar.markdown(
             f"""
             <div style="margin-top: 5px; margin-bottom: 5px; text-align: center;">
-                <img src="data:image/png;base64,{encoded_string}" style="width: 100%; max-width: 250px; height: 50px; object-fit: contain; object-position: center; border-radius: 8px;">
+                <img src="data:image/png;base64,{encoded_string}" style="width: 100%; max-width: 250px; height: 110px; object-fit: contain; object-position: center; border-radius: 8px;">
             </div>
             """,
             unsafe_allow_html=True
