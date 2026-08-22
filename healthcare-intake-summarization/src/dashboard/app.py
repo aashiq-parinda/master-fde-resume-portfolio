@@ -55,7 +55,7 @@ def show_summary_modal(patient_name, summary_text, triage_level, safety_attempts
         st.rerun()
 
 # --- Sidebar: Logo and Simulator ---
-logo_path = os.path.join(os.path.dirname(__file__), "..", "..", "assets", "hospital.jpg")
+logo_path = os.path.join(os.path.dirname(__file__), "..", "..", "assets", "hospital.png")
 if os.path.exists(logo_path):
     try:
         with open(logo_path, "rb") as image_file:
@@ -63,7 +63,7 @@ if os.path.exists(logo_path):
         st.sidebar.markdown(
             f"""
             <div style="margin-top: 5px; margin-bottom: 5px; text-align: center;">
-                <img src="data:image/jpeg;base64,{encoded_string}" style="width: 100%; max-width: 250px; height: 50px; object-fit: contain; object-position: center; border-radius: 8px;">
+                <img src="data:image/png;base64,{encoded_string}" style="width: 100%; max-width: 250px; height: 50px; object-fit: contain; object-position: center; border-radius: 8px;">
             </div>
             """,
             unsafe_allow_html=True
