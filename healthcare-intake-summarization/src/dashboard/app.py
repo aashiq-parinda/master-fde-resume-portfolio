@@ -33,6 +33,27 @@ def post_action(endpoint: str, json_data: dict = None):
         return 500, {"detail": str(e)}
     return 500, {"detail": "Unknown API error"}
 
+# Define zoom modal dialog
+@st.dialog("📋 Pre-Visit Summary Report (Zoom View)", width="large")
+def show_summary_modal(patient_name, summary_text, triage_level, safety_attempts, raw_symptoms, red_flags):
+    st.markdown(f"### Patient: **{patient_name}**")
+    st.markdown(f"**Triage Severity:** `{triage_level}` | **Generation Attempts:** `{safety_attempts}`")
+    st.divider()
+    
+    col_modal_raw, col_modal_sum = st.columns(2)
+    with col_modal_raw:
+        st.markdown("#### 📝 Raw Symptom Transcript")
+        st.info(raw_symptoms)
+        st.markdown("#### 🚑 Clinical Red Flags Reference")
+        st.error(red_flags)
+    with col_modal_sum:
+        st.markdown("#### 📄 Structured Pre-Visit Summary")
+        st.write(summary_text)
+        
+    st.divider()
+    if st.button("Close Zoom View", use_container_width=True):
+        st.rerun()
+
 # --- Sidebar: Logo and Simulator ---
 logo_path = os.path.join(os.path.dirname(__file__), "..", "..", "assets", "hospital.jpg")
 if os.path.exists(logo_path):
@@ -100,15 +121,51 @@ with st.sidebar.form("intake_form"):
             }
             status_code, resp = post_action("/api/intakes", payload)
             if status_code == 201:
-                st.success(f"Intake Created! Triage Recommendation: {resp['triage_recommendation'].upper()}")
+                st.sidebar.success(f"Intake Created! Triage: {resp['triage_recommendation'].upper()}")
                 if resp["safety_attempts_triggered"] > 1:
-                    st.warning(f"Safety Trigger: LLM diagnostic output blocked and regenerated {resp['safety_attempts_triggered'] - 1} times.")
+                    st.sidebar.warning(f"Safety Trigger: Blocked and regenerated {resp['safety_attempts_triggered'] - 1} times.")
             else:
-                st.error("Ingestion failed.")
+                st.sidebar.error("Ingestion failed.")
 
 # Custom Premium Styling
 st.markdown("""
 <style>
+    .top-card {
+        background-color: #1e293b;
+        border-radius: 8px;
+        padding: 15px;
+        border-top: 4px solid #3b82f6;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.15);
+        text-align: center;
+        color: #f8fafc;
+    }
+    .top-card-emergency {
+        background-color: #1e293b;
+        border-radius: 8px;
+        padding: 15px;
+        border-top: 4px solid #ef4444;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.15);
+        text-align: center;
+        color: #f8fafc;
+    }
+    .top-card-urgent {
+        background-color: #1e293b;
+        border-radius: 8px;
+        padding: 15px;
+        border-top: 4px solid #eab308;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.15);
+        text-align: center;
+        color: #f8fafc;
+    }
+    .top-card-safety {
+        background-color: #1e293b;
+        border-radius: 8px;
+        padding: 15px;
+        border-top: 4px solid #10b981;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.15);
+        text-align: center;
+        color: #f8fafc;
+    }
     .triage-emergency {
         background-color: #7f1d1d;
         color: #f87171;
@@ -137,13 +194,13 @@ st.markdown("""
         border-left: 5px solid #10b981;
     }
     .card-safety-ok {
-        background-color: #111827;
+        background-color: #0f172a;
         border-radius: 8px;
         padding: 15px;
         border: 1px solid #10b981;
     }
     .card-safety-retry {
-        background-color: #111827;
+        background-color: #0f172a;
         border-radius: 8px;
         padding: 15px;
         border: 1px solid #eab308;
@@ -164,6 +221,15 @@ intakes = get_data("/api/intakes")
 summaries = get_data("/api/summaries")
 safety_logs = get_data("/api/safety-logs")
 
+# Calculate counts for top-level stats
+total_intakes = len(intakes) if intakes else 0
+emergency_count = 0
+urgent_count = 0
+if summaries:
+    emergency_count = len([s for s in summaries if s["triage_recommendation"].lower() == "emergency"])
+    urgent_count = len([s for s in summaries if s["triage_recommendation"].lower() == "urgent"])
+safety_blocks = len(safety_logs) if safety_logs else 0
+
 # Tabs
 tab_queue, tab_safety = st.tabs(["📋 Physician Triage Queue", "🚨 Diagnostic Safety Audits"])
 
@@ -171,14 +237,46 @@ with tab_queue:
     if not intakes:
         st.info("No patient intakes submitted in the system. Use the Intake Simulator in the sidebar to add patients.")
     else:
-        # Create layouts
+        # 1. Metric Cards Grid
+        st.markdown("### 📊 Live Operations Summary")
+        m_col1, m_col2, m_col3, m_col4 = st.columns(4)
+        with m_col1:
+            st.markdown(f"""
+            <div class="top-card">
+                <p style="margin:0; font-size:14px; color:#94a3b8;">Total Patients Ingested</p>
+                <h2 style="margin:5px 0 0 0; font-size:28px; color:#ffffff;">{total_intakes}</h2>
+            </div>
+            """, unsafe_allow_html=True)
+        with m_col2:
+            st.markdown(f"""
+            <div class="top-card-emergency">
+                <p style="margin:0; font-size:14px; color:#94a3b8;">Emergency Triage Cases</p>
+                <h2 style="margin:5px 0 0 0; font-size:28px; color:#f87171;">{emergency_count}</h2>
+            </div>
+            """, unsafe_allow_html=True)
+        with m_col3:
+            st.markdown(f"""
+            <div class="top-card-urgent">
+                <p style="margin:0; font-size:14px; color:#94a3b8;">Urgent Triage Cases</p>
+                <h2 style="margin:5px 0 0 0; font-size:28px; color:#fbbf24;">{urgent_count}</h2>
+            </div>
+            """, unsafe_allow_html=True)
+        with m_col4:
+            st.markdown(f"""
+            <div class="top-card-safety">
+                <p style="margin:0; font-size:14px; color:#94a3b8;">Safety Gating Blocks</p>
+                <h2 style="margin:5px 0 0 0; font-size:28px; color:#34d399;">{safety_blocks}</h2>
+            </div>
+            """, unsafe_allow_html=True)
+            
+        st.write("---")
+        
+        # 2. Main content split layout
         col_list, col_detail = st.columns([1, 2])
         
         with col_list:
-            st.subheader("Patient Intake Queue")
-            
-            # Search / Filter
-            search = st.text_input("🔍 Search Patient Name", "")
+            st.subheader("Patient Queue")
+            search = st.text_input("🔍 Filter Patient by Name", "")
             
             for patient in intakes:
                 if search and search.lower() not in patient["patient_name"].lower():
@@ -187,7 +285,6 @@ with tab_queue:
                 status = patient["status"].lower()
                 status_color = "🟢 Cleared" if status == "cleared" else "🟡 Flagged" if status == "flagged" else "⚪ Pending"
                 
-                # Checkbox selection simulated by button click
                 btn_label = f"{patient['patient_name']} (DOB: {patient['date_of_birth']}) \n {status_color}"
                 if st.button(btn_label, key=f"btn_{patient['id']}", use_container_width=True):
                     st.session_state["selected_intake_id"] = patient["id"]
@@ -195,7 +292,6 @@ with tab_queue:
         with col_detail:
             selected_id = st.session_state.get("selected_intake_id")
             
-            # Find matching intake
             current_intake = None
             if selected_id:
                 current_intake = next((i for i in intakes if i["id"] == selected_id), None)
@@ -204,10 +300,8 @@ with tab_queue:
                 
             if current_intake:
                 st.subheader(f"Patient Pre-Visit Record: {current_intake['patient_name']}")
-                st.markdown(f"**Date of Birth:** {current_intake['date_of_birth']}")
-                st.markdown(f"**Intake ID:** `{current_intake['id']}`")
+                st.markdown(f"**Date of Birth:** {current_intake['date_of_birth']} | **Intake ID:** `{current_intake['id']}`")
                 
-                # Find matching summary
                 summary = None
                 if summaries:
                     summary = next((s for s in summaries if s["intake_id"] == current_intake["id"]), None)
@@ -215,7 +309,6 @@ with tab_queue:
                 if not summary:
                     st.info("🔄 Pre-visit summary generation is running in the background. Please wait.")
                 else:
-                    # Triage Display
                     triage_class = "triage-routine"
                     triage_text = summary["triage_recommendation"].upper()
                     
@@ -224,12 +317,27 @@ with tab_queue:
                     elif triage_text == "URGENT":
                         triage_class = "triage-urgent"
                         
-                    st.markdown(f"""
-                    <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 20px;">
-                        <strong>Triage Severity Recommendation:</strong>
-                        <span class="{triage_class}">{triage_text}</span>
-                    </div>
-                    """, unsafe_allow_html=True)
+                    # Action row with zoom & triage badge
+                    act_col1, act_col2 = st.columns([2, 1])
+                    with act_col1:
+                        st.markdown(f"""
+                        <div style="display: flex; align-items: center; gap: 15px; margin-top: 5px;">
+                            <strong>Triage Level:</strong>
+                            <span class="{triage_class}">{triage_text}</span>
+                        </div>
+                        """, unsafe_allow_html=True)
+                    with act_col2:
+                        if st.button("🔍 Open Zoom View (Modal)", use_container_width=True):
+                            show_summary_modal(
+                                current_intake["patient_name"],
+                                summary["summary_text"],
+                                triage_text,
+                                summary["safety_attempts"],
+                                current_intake["raw_symptoms"],
+                                summary["red_flags_extracted"]
+                            )
+                            
+                    st.write("")
                     
                     # Safety Checklist Card
                     attempts = summary["safety_attempts"]
@@ -241,7 +349,7 @@ with tab_queue:
                         <h4 style="margin-top:0; color:#ffffff;">🔒 Programmatic Safety Gate Status</h4>
                         <p style="margin: 5px 0 0 0; font-size:13px; color:#e2e8f0;">
                             <strong>Safety Audit:</strong> {safety_status_text}<br>
-                            <strong>Medical Liability Rule:</strong> Enforces 100% diagnostic terminology containment prior to write-back.
+                            <strong>Medical Liability Rule:</strong> Enforces 100% diagnostic terminology containment prior to database write-back.
                         </p>
                     </div>
                     """, unsafe_allow_html=True)
@@ -262,8 +370,7 @@ with tab_queue:
                         st.markdown("### 📊 Structured Pre-Visit Summary")
                         st.write(summary["summary_text"])
                         
-                        # Add a reprocess button
-                        if st.button("🔄 Reprocess and Re-run Pipeline", key=f"rep_{current_intake['id']}"):
+                        if st.button("🔄 Reprocess and Re-run Pipeline", key=f"rep_{current_intake['id']}", use_container_width=True):
                             status_code, resp = post_action(f"/api/intakes/{current_intake['id']}/reprocess")
                             if status_code == 200:
                                 st.success("Intake reprocessed successfully!")
