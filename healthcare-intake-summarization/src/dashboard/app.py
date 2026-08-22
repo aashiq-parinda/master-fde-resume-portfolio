@@ -231,7 +231,7 @@ if summaries:
 safety_blocks = len(safety_logs) if safety_logs else 0
 
 # Tabs
-tab_queue, tab_safety = st.tabs(["📋 Physician Triage Queue", "🚨 Diagnostic Safety Audits"])
+tab_queue, tab_safety, tab_info = st.tabs(["📋 Physician Triage Queue", "🚨 Diagnostic Safety Audits", "⚙️ System Mechanics"])
 
 with tab_queue:
     if not intakes:
@@ -395,3 +395,37 @@ with tab_safety:
             use_container_width=True,
             hide_index=True
         )
+
+with tab_info:
+    st.subheader("⚙️ System Architecture & Programmatic Guardrails")
+    st.markdown("""
+    This project demonstrates a **Zero-Diagnosis Clinical Intake Pipeline** engineered to resolve medical liability risk in automated pre-visit charting.
+    
+    ### 🔬 Architectural Core
+    1. **Unstructured Data Ingress**: The patient submits free-text symptoms (e.g. via an online portal or check-in tablet).
+    2. **FTS Guideline Routing (RAG)**: The system executes a native PostgreSQL Full-Text Search (FTS) against a reference database of standard clinical guidelines (containing red-flag parameters and triage severities).
+    3. **LLM Synthesis**: The LLM combines the symptoms and guidelines to build a structured pre-visit summary.
+    4. **Programmatic Safety Gating**: A deterministic Python layer inspects the output against a blacklist of 50+ diseases and syntactic regex assertion matches.
+    5. **Corrective Retry Loop**: If a diagnosis is caught, the system blocks writing to the DB, logs an infraction audit, and re-queries the LLM with a corrective feedback warning. If 3 failures occur, it defaults to a safe template.
+    """)
+    
+    # Render flowchart as an visual aid
+    st.markdown("### 🔄 Patient Ingest Lifecycle & Safety Loop")
+    st.markdown("""
+    ```
+    [ Patient Raw Intake Text ]
+                 │
+                 ▼
+    [ PostgreSQL Full-Text Search (FTS) ] ──► Matches Triage Guidelines & Red Flags
+                 │
+                 ▼
+    [ LLM Synthesis (Gemini/Mock) ] ◄──┐ (Corrective Warning Retry, max 3)
+                 │                     │
+                 ▼                     │
+    [ Python Safety Filter Gate ] ─────┘ (Diagnostic Term/Syntax Violation caught)
+                 │
+                 ├──► (Safe Output) ───► [ Write to Database & Clinical Dashboard ]
+                 │
+                 └──► (All Retries Fail) ──► [ Safe Template Fallback Summary ]
+    ```
+    """)
