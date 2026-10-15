@@ -184,14 +184,19 @@ else:
             """, unsafe_allow_html=True)
             
     # 2. Main tabs
-    tab_records, tab_dlq = st.tabs(["📊 Integrated Records", "🚨 Dead Letter Queue (DLQ) Logs"])
+    tab_records, tab_circuit, tab_dlq, tab_failover, tab_cost = st.tabs([
+        "📊 Integrated Records", 
+        "⚡ Circuit Breakers", 
+        "🚨 Dead Letter Queue & Replay", 
+        "🌐 Multi-Cloud Failover", 
+        "💰 Cloud Cost Comparison"
+    ])
     
     with tab_records:
         st.subheader("Unified Customer Directory")
         records = get_data("/api/records")
         if records:
             df = pd.DataFrame(records)
-            # Display cleanly
             st.dataframe(
                 df[["external_id", "source_name", "name", "email", "balance", "status", "synced_at"]],
                 column_config={
@@ -208,22 +213,99 @@ else:
             )
         else:
             st.info("No unified customer records synced yet.")
-            
-    with tab_dlq:
-        st.subheader("Failed Ingestion & Mapping Audits")
-        dlq_data = get_data("/api/dlq")
-        if dlq_data:
-            df_dlq = pd.DataFrame(dlq_data)
+
+    with tab_circuit:
+        st.subheader("⚡ Integration Adapters Circuit Breaker Status")
+        st.markdown("Automatic fault isolation protecting upstream systems. Trips from `CLOSED` to `OPEN` under failure thresholds, then probes via `HALF_OPEN` canary.")
+        
+        breakers_data = get_data("/api/circuit-breakers")
+        if breakers_data:
+            df_cb = pd.DataFrame(list(breakers_data.values()))
             st.dataframe(
-                df_dlq[["source_name", "error_message", "raw_payload", "failed_at"]],
+                df_cb[["name", "state", "failure_count", "state_uptime_seconds"]],
                 column_config={
-                    "source_name": "Ingestion Source",
-                    "error_message": "Ingestion/Mapping Error Details",
-                    "raw_payload": "Raw Captured Payload",
-                    "failed_at": "Failure Timestamp"
+                    "name": "Integration Adapter",
+                    "state": "Circuit State",
+                    "failure_count": "Consecutive Failures",
+                    "state_uptime_seconds": "State Uptime (s)"
                 },
                 use_container_width=True,
                 hide_index=True
             )
         else:
+            st.success("All circuit breakers operating in CLOSED (healthy) state.")
+            
+    with tab_dlq:
+        st.subheader("🚨 Dead Letter Queue & Programmatic Message Replay")
+        st.markdown("Quarantined payloads with schema violations or timeouts. Click **Replay** to safely re-ingest resolved records.")
+        
+        dlq_data = get_data("/api/dlq")
+        if dlq_data:
+            for item in dlq_data:
+                d_col1, d_col2 = st.columns([4, 1])
+                with d_col1:
+                    st.error(f"**DLQ #{item['id']} ({item['source_name']}):** {item['error_message']}")
+                    st.code(item['raw_payload'], language="json")
+                with d_col2:
+                    if st.button(f"🔄 Replay #{item['id']}", key=f"dlq_rep_{item['id']}"):
+                        code, r = post_action(f"/api/dlq/{item['id']}/replay")
+                        if code == 200:
+                            st.success(f"DLQ #{item['id']} replayed successfully!")
+                            st.rerun()
+                        else:
+                            st.error(f"Replay failed: {r.get('message')}")
+        else:
             st.success("Dead Letter Queue is empty. No ingestion failures recorded!")
+
+    with tab_failover:
+        st.subheader("🌐 Active-Passive Multi-Cloud Disaster Recovery Control")
+        st.markdown("Automated failover between **Primary (AWS ECS Fargate)** and **Secondary (Azure Container Apps)**.")
+        
+        failover_info = get_data("/api/failover")
+        if failover_info:
+            active_c = failover_info["active_cloud"]
+            f_col1, f_col2 = st.columns(2)
+            with f_col1:
+                st.markdown(f"### Currently Active Route: **`{active_c}`**")
+                st.markdown(f"- **Primary Target**: {failover_info['primary_target']}")
+                st.markdown(f"- **Secondary Target**: {failover_info['secondary_target']}")
+                st.markdown(f"- **Consecutive Primary Failures**: `{failover_info['primary_consecutive_failures']}` / 3")
+            with f_col2:
+                st.markdown("### 🛠️ Manual Disaster Recovery Drill")
+                target_switch = "AZURE" if active_c == "AWS" else "AWS"
+                if st.button(f"🚨 Switch Active Traffic to {target_switch}", use_container_width=True):
+                    try:
+                        res = requests.post(f"{API_URL}/api/failover/switch", json={"target_cloud": target_switch}, timeout=5.0)
+                        if res.status_code == 200:
+                            st.success(f"Switched active cloud to {target_switch}!")
+                            st.rerun()
+                    except Exception as e:
+                        st.error(f"Failover trigger failed: {e}")
+
+    with tab_cost:
+        st.subheader("💰 Multi-Cloud Total Cost of Ownership (TCV) Comparison")
+        st.markdown("Comparative financial analysis showing why **Azure Container Apps is ~30% cheaper** than AWS ECS Fargate for this architecture.")
+        
+        cost_data = get_data("/api/costs/compare")
+        if cost_data:
+            summary = cost_data["summary"]
+            c_col1, c_col2, c_col3 = st.columns(3)
+            with c_col1:
+                st.metric("AWS Monthly Cost", f"${cost_data['aws']['monthly_total_usd']}", f"₹{cost_data['aws']['monthly_total_inr']:,.0f} INR")
+            with c_col2:
+                st.metric("Azure Monthly Cost", f"${cost_data['azure']['monthly_total_usd']}", f"₹{cost_data['azure']['monthly_total_inr']:,.0f} INR", delta=f"-{summary['azure_monthly_savings_pct']}% Savings")
+            with c_col3:
+                st.metric("Annual Savings (Azure vs AWS)", f"₹{summary['annual_savings_inr']:,.0f} INR", delta="~30% Net Reduction")
+                
+            st.write("---")
+            st.markdown("#### Itemized Architectural Cost Breakdown (USD / Month)")
+            comparison_rows = [
+                {"Resource": "Managed Containers", "AWS (ECS Fargate)": f"${cost_data['aws']['compute_usd']}", "Azure (Container Apps)": f"${cost_data['azure']['compute_usd']}", "GCP (Cloud Run)": f"${cost_data['gcp']['compute_usd']}"},
+                {"Resource": "PostgreSQL Database", "AWS (ECS Fargate)": f"${cost_data['aws']['database_usd']}", "Azure (Container Apps)": f"${cost_data['azure']['database_usd']}", "GCP (Cloud Run)": f"${cost_data['gcp']['database_usd']}"},
+                {"Resource": "Ingress / Load Balancer", "AWS (ECS Fargate)": f"${cost_data['aws']['load_balancer_usd']} (ALB)", "Azure (Container Apps)": "$0.00 (Built-in Free)", "GCP (Cloud Run)": f"${cost_data['gcp']['load_balancer_usd']}"},
+                {"Resource": "NAT Gateway / Egress", "AWS (ECS Fargate)": f"${cost_data['aws']['nat_gateway_usd']}", "Azure (Container Apps)": "$0.00 (VNet Routes)", "GCP (Cloud Run)": f"${cost_data['gcp']['nat_gateway_usd']}"},
+                {"Resource": "Total Monthly Cost", "AWS (ECS Fargate)": f"${cost_data['aws']['monthly_total_usd']}", "Azure (Container Apps)": f"${cost_data['azure']['monthly_total_usd']}", "GCP (Cloud Run)": f"${cost_data['gcp']['monthly_total_usd']}"}
+            ]
+            st.dataframe(pd.DataFrame(comparison_rows), use_container_width=True, hide_index=True)
+            st.info("💡 **Cost Driver Analysis**: In AWS, deploying containers in private VPC subnets requires an Application Load Balancer ($26.50/mo) and an AWS NAT Gateway ($48.20/mo minimum base charge). Azure Container Apps provides built-in ingress routing at the environment tier and eliminates NAT gateway charges via integrated route tables, generating ~30% net operational savings.")
+

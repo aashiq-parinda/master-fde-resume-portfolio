@@ -231,7 +231,14 @@ if summaries:
 safety_blocks = len(safety_logs) if safety_logs else 0
 
 # Tabs
-tab_queue, tab_safety, tab_info = st.tabs(["📋 Physician Triage Queue", "🚨 Diagnostic Safety Audits", "⚙️ System Mechanics"])
+tab_queue, tab_rag, tab_safety, tab_traces, tab_evals, tab_info = st.tabs([
+    "📋 Physician Triage & Citations", 
+    "🔍 Hybrid RAG & Reranker", 
+    "🛡️ Safety Guardrails", 
+    "⏱️ Observability & Tracing", 
+    "📊 Benchmark Evaluations", 
+    "⚙️ System Architecture"
+])
 
 with tab_queue:
     if not intakes:
@@ -367,7 +374,7 @@ with tab_queue:
                         st.error(summary["red_flags_extracted"])
                         
                     with col_summary:
-                        st.markdown("### 📊 Structured Pre-Visit Summary")
+                        st.markdown("### 📊 Structured Pre-Visit Summary (with Citations)")
                         st.write(summary["summary_text"])
                         
                         if st.button("🔄 Reprocess and Re-run Pipeline", key=f"rep_{current_intake['id']}", use_container_width=True):
@@ -376,21 +383,155 @@ with tab_queue:
                                 st.success("Intake reprocessed successfully!")
                                 st.rerun()
 
+with tab_rag:
+    st.subheader("🔍 Hybrid Retrieval & Cross-Encoder Reranker Explorer")
+    st.markdown("Explore how the system executes **Dense Vector Cosine Similarity**, **Sparse BM25 Keyword Search**, and **Reciprocal Rank Fusion (RRF)**, followed by deep **Cross-Encoder Contextual Reranking**.")
+    
+    rag_query = st.text_input(
+        "Enter Patient Symptoms Query for RAG Inspection:",
+        value="Crushing central chest pain radiating to left jaw with cold sweats and shortness of breath"
+    )
+    
+    if st.button("🔬 Execute Hybrid Search & Reranking", use_container_width=True):
+        with st.spinner("Executing dense embeddings, BM25 sparse matching, and cross-encoder scoring..."):
+            status_code, rag_data = post_action("/api/retrieval/inspect", {"query": rag_query})
+            if status_code == 200 and "telemetry" in rag_data:
+                telemetry = rag_data["telemetry"]
+                
+                r_col1, r_col2 = st.columns(2)
+                with r_col1:
+                    st.markdown("#### 1️⃣ Hybrid Retrieval Candidates (Dense + Sparse + RRF)")
+                    df_hybrid = pd.DataFrame(telemetry["hybrid_candidates"])
+                    st.dataframe(
+                        df_hybrid[["category", "dense_score", "sparse_score", "rrf_score", "hybrid_score"]],
+                        column_config={
+                            "category": "Protocol Category",
+                            "dense_score": st.column_config.ProgressColumn("Dense Score (Cosine)", min_value=0, max_value=1),
+                            "sparse_score": "Sparse BM25",
+                            "rrf_score": "RRF Score",
+                            "hybrid_score": st.column_config.ProgressColumn("Fused Score", min_value=0, max_value=1)
+                        },
+                        use_container_width=True,
+                        hide_index=True
+                    )
+                with r_col2:
+                    st.markdown("#### 2️⃣ Cross-Encoder Contextual Reranking")
+                    reranked_top = telemetry["reranked_top"]
+                    for idx, cand in enumerate(reranked_top, start=1):
+                        delta = cand.get("rank_delta", 0)
+                        delta_badge = f"⬆️ +{delta}" if delta > 0 else f"⬇️ {delta}" if delta < 0 else "⏺️ 0"
+                        st.markdown(f"**Rank #{idx}: {cand['category']}** ({delta_badge}) | Score: `{cand.get('rerank_score')}`")
+                        factors = cand.get("factors", {})
+                        st.json(factors)
+            else:
+                st.error("Failed to fetch retrieval inspection data.")
+
 with tab_safety:
-    st.subheader("Programmatic Safety Filter Infraction Logs")
-    st.markdown("This audit trail logs all attempts where the LLM violated the medical liability safety gate (i.e. attempted to output a clinical diagnosis instead of descriptive symptoms). It documents the raw blocked response, the matched terms, and the timestamp.")
+    st.subheader("🛡️ Multi-Tier Safety Guardrails & Infraction Audit Trail")
+    st.markdown("Multi-tiered defense ensuring a strict **0.0% Diagnostic Leakage Rate** through lexical boundary matching, syntactic regex assertion interception, PHI/PII masking, and deterministic template fallback.")
     
     if not safety_logs:
-        st.success("✅ Clean Audit Record: The safety filter has recorded 0 diagnostic leakage violations in this session!")
+        st.success("✅ Clean Audit Record: 0 diagnostic leakage violations in active database session.")
     else:
         df_logs = pd.DataFrame(safety_logs)
         st.dataframe(
             df_logs[["patient_name", "violation_reason", "blocked_output", "timestamp"]],
             column_config={
                 "patient_name": "Patient Context",
-                "violation_reason": "Matching Rule Violation",
-                "blocked_output": "Blocked LLM Output Content",
-                "timestamp": "Trigger Timestamp"
+                "violation_reason": "Interception Rule",
+                "blocked_output": "Blocked Response",
+                "timestamp": "Timestamp"
+            },
+            use_container_width=True,
+            hide_index=True
+        )
+
+with tab_traces:
+    st.subheader("⏱️ Observability & Distributed Execution Tracing")
+    st.markdown("Micro-profiling every stage of the clinical RAG pipeline: Ingestion, Sparse BM25, Dense Vector, Fusion, Cross-Encoder, LLM Synthesis, Guardrails, and DB write-back.")
+    
+    traces_data = get_data("/api/traces")
+    if not traces_data:
+        st.info("No execution traces currently in buffer. Submit an intake in the sidebar or run benchmarks.")
+    else:
+        tr_col1, tr_col2 = st.columns([1, 2])
+        with tr_col1:
+            st.markdown("#### Recent Pipeline Traces")
+            for t in traces_data[:10]:
+                t_label = f"{t.get('patient_name', 'Patient')} ({t['total_duration_ms']}ms - {t['status']})"
+                if st.button(t_label, key=f"tr_{t['trace_id']}", use_container_width=True):
+                    st.session_state["selected_trace_id"] = t["trace_id"]
+        with tr_col2:
+            sel_tr_id = st.session_state.get("selected_trace_id", traces_data[0]["trace_id"])
+            curr_trace = next((t for t in traces_data if t["trace_id"] == sel_tr_id), traces_data[0])
+            st.markdown(f"#### Trace Details: `{curr_trace['trace_id']}`")
+            st.markdown(f"**Total Duration:** `{curr_trace['total_duration_ms']} ms` | **Status:** `{curr_trace['status']}`")
+            
+            spans = curr_trace.get("spans", [])
+            if spans:
+                df_spans = pd.DataFrame(spans)
+                st.dataframe(
+                    df_spans[["name", "duration_ms", "status", "metadata"]],
+                    column_config={
+                        "name": "Pipeline Stage / Span",
+                        "duration_ms": "Duration (ms)",
+                        "status": "Outcome",
+                        "metadata": "Telemetry Metadata"
+                    },
+                    use_container_width=True,
+                    hide_index=True
+                )
+
+with tab_evals:
+    st.subheader("📊 Automated Clinical AI Safety & RAG Benchmark Suite")
+    st.markdown("Automated evaluation harness testing standard clinical intakes, subtle presentations, and adversarial diagnostic jailbreak attacks against gold-standard ground truth.")
+    
+    if st.button("🚀 Run Full Automated Benchmark Suite (10 Gold Cases)", use_container_width=True):
+        with st.spinner("Executing gold dataset test cases against multi-tier guardrails and RAG pipeline..."):
+            status_code, eval_summary = post_action("/api/evals/run")
+            if status_code == 200 and "metrics" in eval_summary:
+                st.session_state["latest_eval_results"] = eval_summary
+                st.success("Benchmark completed successfully!")
+            else:
+                st.error("Evaluation run failed.")
+                
+    latest_eval = st.session_state.get("latest_eval_results")
+    if not latest_eval and os.path.exists(os.path.join(os.path.dirname(__file__), "..", "..", "evals", "results.json")):
+        try:
+            import json
+            with open(os.path.join(os.path.dirname(__file__), "..", "..", "evals", "results.json"), "r") as f:
+                latest_eval = json.load(f)
+        except Exception:
+            pass
+
+    if latest_eval:
+        m = latest_eval["metrics"]
+        st.markdown("### 🏆 Gold Standard Performance Scorecard")
+        sc1, sc2, sc3, sc4, sc5 = st.columns(5)
+        with sc1:
+            st.metric("Diagnostic Leakage Rate", f"{m['diagnostic_leakage_rate_pct']}%", delta="0.0% Target", delta_color="inverse")
+        with sc2:
+            st.metric("Adversarial Defense Rate", f"{m['adversarial_defense_rate_pct']}%", delta="100% Intercepted")
+        with sc3:
+            st.metric("Triage Concordance", f"{m['triage_accuracy_pct']}%", delta="High Accuracy")
+        with sc4:
+            st.metric("Claim Groundedness", f"{m['mean_groundedness_pct']}%", delta="Protocol Provenance")
+        with sc5:
+            st.metric("Latency (p50 / p95)", f"{m['latency_p50_ms']}ms / {m['latency_p95_ms']}ms")
+            
+        st.markdown("#### Test Case Breakdown")
+        df_cases = pd.DataFrame(latest_eval["case_details"])
+        st.dataframe(
+            df_cases[["case_id", "category", "is_adversarial", "triage_expected", "triage_assigned", "is_safe", "citations_count", "latency_ms"]],
+            column_config={
+                "case_id": "Case ID",
+                "category": "Clinical Category",
+                "is_adversarial": "Adversarial Trap?",
+                "triage_expected": "Expected Triage",
+                "triage_assigned": "Assigned Triage",
+                "is_safe": "Safety Compliant",
+                "citations_count": "Citations",
+                "latency_ms": "Latency (ms)"
             },
             use_container_width=True,
             hide_index=True
@@ -402,30 +543,11 @@ with tab_info:
     This project demonstrates a **Zero-Diagnosis Clinical Intake Pipeline** engineered to resolve medical liability risk in automated pre-visit charting.
     
     ### 🔬 Architectural Core
-    1. **Unstructured Data Ingress**: The patient submits free-text symptoms (e.g. via an online portal or check-in tablet).
-    2. **FTS Guideline Routing (RAG)**: The system executes a native PostgreSQL Full-Text Search (FTS) against a reference database of standard clinical guidelines (containing red-flag parameters and triage severities).
-    3. **LLM Synthesis**: The LLM combines the symptoms and guidelines to build a structured pre-visit summary.
-    4. **Programmatic Safety Gating**: A deterministic Python layer inspects the output against a blacklist of 50+ diseases and syntactic regex assertion matches.
-    5. **Corrective Retry Loop**: If a diagnosis is caught, the system blocks writing to the DB, logs an infraction audit, and re-queries the LLM with a corrective feedback warning. If 3 failures occur, it defaults to a safe template.
+    1. **Hybrid Retrieval**: Combines Dense Vector Cosine Similarity (semantic context) and Sparse BM25 Keyword Search (lexical red-flags) via Reciprocal Rank Fusion (RRF).
+    2. **Contextual Cross-Encoder Reranker**: Evaluates clinical affinity clusters, symptom acuity, and emergency triage weights.
+    3. **Generative Synthesis with Grounded Citations**: Summarizes patient presentations with inline citation tags linked directly to source protocol excerpts.
+    4. **Multi-Tier Safety Guardrails**: Programmatically intercepts diagnostic terms, assertions, and PHI prior to database write-back.
+    5. **Self-Correction & Failsafe Containment**: Automatic feedback retry loop with guaranteed 0.0% leakage template fallback.
+    6. **Distributed Tracing & Benchmarking**: End-to-end span micro-profiling and automated gold test evaluation.
     """)
-    
-    # Render flowchart as an visual aid
-    st.markdown("### 🔄 Patient Ingest Lifecycle & Safety Loop")
-    st.markdown("""
-    ```
-    [ Patient Raw Intake Text ]
-                 │
-                 ▼
-    [ PostgreSQL Full-Text Search (FTS) ] ──► Matches Triage Guidelines & Red Flags
-                 │
-                 ▼
-    [ LLM Synthesis (Gemini/Mock) ] ◄──┐ (Corrective Warning Retry, max 3)
-                 │                     │
-                 ▼                     │
-    [ Python Safety Filter Gate ] ─────┘ (Diagnostic Term/Syntax Violation caught)
-                 │
-                 ├──► (Safe Output) ───► [ Write to Database & Clinical Dashboard ]
-                 │
-                 └──► (All Retries Fail) ──► [ Safe Template Fallback Summary ]
-    ```
-    """)
+

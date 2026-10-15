@@ -6,7 +6,7 @@
 ---
 
 ## 🎯 Professional Executive Summary
-Accomplished **Forward Deployed Engineer (FDE) & Multi-Cloud Solutions Architect** with **5+ years of production software engineering experience**, **10+ published commercial applications**, and **3 enterprise FDE system deployments**. Specializes in bridging enterprise operational challenges with resilient multi-cloud architectures (AWS Fargate, Azure Container Apps, Terraform IaC, TimescaleDB, PostgreSQL), zero-trust security governance (HIPAA, PCI-DSS, Level 2 VAPT, SEBI/RBI standards), and high-throughput microservices (FastAPI, Flask, Node.js, gRPC). Proven track record of delivering direct enterprise financial impact, including **₹4.5 Crore/yr integration savings**, **₹1.8 Crore/yr administrative savings**, and **₹25.20 Crore/yr line-halt prevention**.
+Accomplished **Forward Deployed Engineer (FDE) & Multi-Cloud Solutions Architect** with **5+ years of production software engineering experience**, **10+ published commercial applications**, and **4 enterprise FDE system deployments**. Specializes in bridging enterprise operational challenges with resilient multi-cloud architectures (AWS Fargate, Azure Container Apps, Kubernetes HPA, Terraform IaC, TimescaleDB, PostgreSQL), zero-trust security governance (HIPAA, PCI-DSS, Level 2 VAPT, SEBI/RBI standards), agentic AI workflows (LangGraph, Tool Calling, Human-in-the-Loop Governance, Compensating Transactions), and high-throughput microservices (FastAPI, Flask, Node.js, gRPC). Proven track record of delivering direct enterprise financial impact, including **₹4.5 Crore/yr integration savings**, **₹1.8 Crore/yr administrative savings**, **₹25.20 Crore/yr line-halt prevention**, and **87% incident MTTR reduction**.
 
 ---
 
@@ -14,18 +14,28 @@ Accomplished **Forward Deployed Engineer (FDE) & Multi-Cloud Solutions Architect
 
 ### 1. **Industrial Predictive Maintenance Telemetry Platform** | [`industrial-predictive-maintenance`](https://github.com/aashiq-parinda/master-fde-resume-portfolio/tree/main/industrial-predictive-maintenance)
 * **Enterprise Problem:** Provisioned real-time predictive telemetry pipeline for a Tier-1 automotive manufacturer losing **₹25.20 Crore/year** to stamping line halting.
-* **Technical Core:** Edge vibration, temperature, and RPM telemetry stream processed using statistical Z-scores, Redis pub/sub buffers, and an `IsolationForest` ML model for failure prediction. Built automated Terraform IaC for AWS Fargate, RDS (TimescaleDB), and VPC.
-* **Impact & Metrics:** **12.4ms telemetry ingestion-to-detection latency**, **₹90 Lakhs/month net savings**, **421% Year 1 ROI**, and a **2.3-month payback period**.
+* **Technical Core:** Edge vibration, temperature, and RPM telemetry stream processed using statistical Z-scores, Redis pub/sub buffers, and an `IsolationForest` ML model for failure prediction. Built real-time sensor drift detection (Population Stability Index [PSI] & Kolmogorov-Smirnov test), automated evaluation benchmark suite (ROC-AUC/PR-AUC), Prometheus `/metrics`, Kubernetes manifests (`Deployment`, `Service`, `HPA`), and Terraform IaC for AWS.
+* **Impact & Metrics:** **12.4ms telemetry ingestion-to-detection latency**, **₹90 Lakhs/month net savings**, **421% Year 1 ROI**, **2.3-month payback period**, and **100% test pass rate across 19 unit tests**.
 
-### 2. **Healthcare Patient Intake & Safety Summarization Platform** | [`healthcare-intake-summarization`](https://github.com/aashiq-parinda/master-fde-resume-portfolio/tree/main/healthcare-intake-summarization)
-* **Enterprise Problem:** Engineered patient charting and triage platform for a healthcare clinic network processing **15,000+ monthly patient intakes**, where medical liability rules strictly prohibit LLM-generated diagnoses.
-* **Technical Core:** Hybrid Full-Text Search (FTS) indexing clinical protocols paired with a deterministic, LLM-independent Python **Programmatic Safety Filter** (lexical blacklist + syntactic regex matching) to intercept diagnostic leakages before database write-back.
-* **Impact & Metrics:** **0.0% Diagnostic Leakage Rate** (enforced by gatekeepers), **96.5% Red-Flag Recall**, physician reading time cut by **85%** (under 45s), and **₹1.8 Crore/year administrative savings**.
+### 2. **Healthcare Patient Intake & AI Safety Flagship Platform** | [`healthcare-intake-summarization`](https://github.com/aashiq-parinda/master-fde-resume-portfolio/tree/main/healthcare-intake-summarization)
+* **Enterprise Problem:** Engineered patient charting, triage, and RAG summarization system for a clinic network processing **15,000+ monthly patient intakes**, where medical liability rules strictly prohibit LLM-generated diagnoses.
+* **Technical Core:** **Hybrid RAG** combining sparse BM25 and dense clinical semantic vector embeddings via Reciprocal Rank Fusion (`k=60`), paired with a 6-cluster Contextual Cross-Encoder Reranker. Generated summaries include exact inline provenance citation markers (`[^1]`) linked to authoritative clinical guidelines with groundedness scoring. Programmatic multi-layer safety filter enforces a 100+ term medical blacklist, syntactic assertions, and PHI regex scrubbers with distributed span micro-tracing.
+* **Impact & Metrics:** **0.0% Diagnostic Leakage Rate** (guaranteed), **100% Adversarial Injection Defense**, **90% Triage Concordance**, **87.5% Groundedness**, **p50 retrieval latency under 5ms**, physician reading time cut by **85%** (under 45s), and **₹1.8 Crore/year administrative savings**.
 
 ### 3. **Enterprise Multi-Cloud Integration & Failover Platform** | [`enterprise-integration-platform`](https://github.com/aashiq-parinda/master-fde-resume-portfolio/tree/main/enterprise-integration-platform)
 * **Enterprise Problem:** Consolidated four legacy transactional feeds (REST API, legacy SOAP/XML, mainframe CSV files, and signed webhooks) into a unified relational schema for an acquired distributor.
-* **Technical Core:** Configuration-driven polling loops executing network calls with exponential backoff retries and random jitter, separating schema mapping errors into a Dead Letter Queue (DLQ) table. Complete multi-cloud infrastructure abstraction (AWS Fargate vs. Azure Container Apps) built with Terraform.
-* **Impact & Metrics:** **100% Data Preservation** via DLQ routing, **₹4.5 Crore/year integration savings**, and a documented failover DNS runbook proving Azure Container Apps is **30% cheaper** than AWS ECS Fargate for this workload.
+* **Technical Core:** Cryptographic SHA-256 idempotency locking (`PENDING`, `COMPLETED`, `FAILED` state machine), circuit breakers (`CLOSED`, `OPEN`, `HALF_OPEN`) with exponential backoff and jitter, Dead Letter Queue (DLQ) replay engine, and active-passive automated multi-cloud failover/failback between AWS and Azure. Complete multi-cloud infrastructure abstraction built with Terraform.
+* **Impact & Metrics:** **100% Data Preservation** via DLQ routing and idempotency, **₹4.5 Crore/year integration savings**, and a documented multi-cloud financial model proving Azure Container Apps is **30% cheaper** than AWS ECS Fargate due to built-in ingress and route tables eliminating ALB and NAT Gateway minimum fees.
+
+### 4. **Enterprise Operations AI Agent (Autonomous Remediation with HITL Governance)** | [`enterprise-operations-agent`](https://github.com/aashiq-parinda/master-fde-resume-portfolio/tree/main/enterprise-operations-agent)
+* **Enterprise Problem:** Built autonomous cloud infrastructure remediation agent resolving operational incidents (pod memory leaks, DB connection pool exhaustion, cache staleness, service latency spikes) while enforcing strict human oversight and zero-tampering compliance.
+* **Technical Core:** LangGraph-compatible 8-node state graph orchestrator (`INGEST` ➡️ `DIAGNOSE` ➡️ `PLAN` ➡️ `APPROVAL_GATE` ➡️ `EXECUTE` ➡️ `VERIFY` ➡️ `FINALIZE` / `ROLLBACK`). Integrates a tool-calling registry (`scale_service`, `restart_pod`, `optimize_db_pool`, `flush_redis_cache`), a Saga-pattern compensating transaction engine for automated rollback, an immutable append-only cryptographic audit ledger (SHA-256 chained hashing), and human-in-the-loop approval gating for high-risk interventions.
+* **Impact & Metrics:** **87% MTTR Reduction** (from 24.5 min to 3.2 min), **100% HITL Approval Gate Enforcement**, **100% Tool Selection Accuracy**, and zero-tampering audit compliance.
+
+### 5. **Contract Clause Risk Review & PEFT Agent** | [Hugging Face Live Demo](https://huggingface.co/spaces/ashrafksalim/contract-clause-risk-review) · [`contract-risk-review`](https://github.com/aashiq-parinda/LLM-Fine-Tuning-Agentic-Reasoning-for-Contract-Risk-Review)
+* **Enterprise Problem:** Enterprise legal teams spend hours manually parsing high-risk clauses (indemnification, governing law, termination) across commercial agreements.
+* **Technical Core:** Parameter-efficient fine-tuning (LoRA) on `microsoft/deberta-v3-small` over the SEC LEDGAR dataset for clause classification; wrapped in a LangGraph state machine with Chroma RAG for precedent retrieval, LLM plain-English risk summarization, and confidence-threshold human escalation guardrails.
+* **Impact & Metrics:** Deployed interactive **Hugging Face Space** evaluating classifier accuracy, macro-F1, per-category fairness metrics, and confidence-routed human-in-the-loop fallback queues.
 
 ---
 
@@ -81,10 +91,12 @@ Accomplished **Forward Deployed Engineer (FDE) & Multi-Cloud Solutions Architect
 
 ## 💻 Technical Skills & Core Competencies
 
-* **Multi-Cloud & Infrastructure**: Terraform (IaC), AWS (Fargate, ECS, EC2, S3, ELB, App Runner, RDS, VPC), Azure (Container Apps), GCP, Docker, GitHub Actions CI/CD.
-* **Data & Streaming Engineering**: TimescaleDB, PostgreSQL (asyncpg, Full-Text Search), Redis Pub/Sub, Dead Letter Queues (DLQ), Exponential Backoff Jitter.
-* **Software & Systems Engineering**: Python (FastAPI Async, Flask), Node.js, Flutter (Lead), React Native, Android (Java/Kotlin), iOS (Swift), REST, gRPC, Protobuf, WebSockets.
-* **ML & Analytics**: scikit-learn (`IsolationForest` Telemetry), Vector Search, Programmatic Safety Filters, LLM RAG, OpenCV.
+* **Agentic AI & Orchestration**: LangGraph, StateGraph State Machines, LangSmith (Tracing, Evals, Debugging & Monitoring), Tool Calling Registries, Human-In-The-Loop (HITL) Gating, Saga Compensating Transactions, Cryptographic Audit Ledgers.
+* **Retrieval-Augmented Generation (RAG) & Safety**: Hybrid Retrieval (BM25 Sparse + Dense Clinical Semantic Vectors), Reciprocal Rank Fusion (RRF), Contextual Cross-Encoder Rerankers, Provenance Citations, Programmatic Safety Filters (0.0% Diagnostic Leakage), Distributed Span Micro-Tracing.
+* **Multi-Cloud & Infrastructure**: Terraform (IaC), AWS (Fargate, ECS, EKS, EC2, S3, ELB, App Runner, RDS, VPC), Azure (Container Apps), GCP, Kubernetes (Deployments, Services, HPA), Docker, GitHub Actions CI/CD.
+* **Data & Streaming Engineering**: TimescaleDB, PostgreSQL (asyncpg, Full-Text Search, pgvector), Redis Pub/Sub, Cryptographic Idempotency Locking, Circuit Breakers (Half-Open), Dead Letter Queues (DLQ), Exponential Backoff Jitter.
+* **Software & Systems Engineering**: Python (FastAPI Async, Pydantic V2, Flask), Node.js, Flutter (Lead), React Native, Android (Java/Kotlin), iOS (Swift), REST, gRPC, Protobuf, WebSockets.
+* **ML & Predictive Analytics**: scikit-learn (`IsolationForest` Telemetry), Population Stability Index (PSI), Kolmogorov-Smirnov (KS) Drift Detection, ROC-AUC / PR-AUC Benchmark Evaluation, OpenCV.
 * **Compliance & Security**: HIPAA, PCI-DSS, SEBI / RBI Guidelines, CDC/CMS Health Reporting, Data Custodianship & Governance, Level 2 VAPT, Biometric Auth, eKYC, Digio eSign.
 
 ---
@@ -95,7 +107,11 @@ Accomplished **Forward Deployed Engineer (FDE) & Multi-Cloud Solutions Architect
 * **B.Sc. in Computer Science** | Rizvi College, Mumbai University *(2017 – 2020)* — **CGPA:** 9.33 / 10.00
 * **Vocational Computer Science / HSC (12th)** | M.H. Saboo Siddik Polytechnic, Mumbai *(2015 – 2017)* — **Percentage:** 75.80%
 
-### **Certifications & Compliance**
-* **Bioinformatics & Genomics**: Genomics & Proteomics Analysis.
-* **Healthcare Compliance**: Healthcare API Compliance & HIPAA PHI Data Governance.
-* **FinTech Standards**: FinTech Regulatory Standards & PCI-DSS Payment Processing.
+### **AI & Professional Certifications**
+* **LangChain**: [Project: Deep Research with LangGraph](https://academy.langchain.com/certificates/yn40p3bviz) *(Issued Oct 2026 · Credential ID: `yn40p3bviz`)* — Multi-agent research architecture, recursive search planning, iterative synthesis, and LangSmith evaluation.
+* **LangChain**: [Quickstart: LangGraph Essentials - Python](https://academy.langchain.com/certificates/1hhanf8ox7) *(Issued Oct 2026 · Credential ID: `1hhanf8ox7`)* — StateGraph orchestration, State schemas, Nodes, Edges, and Checkpointer memory.
+* **LangChain**: [Quickstart: LangSmith Essentials](https://academy.langchain.com/certificates/rlwlwmnqzc) *(Issued Oct 2026 · Credential ID: `rlwlwmnqzc`)* — Developing, debugging, tracing, monitoring, and evaluating LLM and agentic workflows.
+* **Google Cloud**: [Introduction to Generative AI Badge](https://www.skills.google/public_profiles/c0e9e44f-59b6-4e05-b972-7da8fd405a4a/badges/9066294) *(Issued May 2024)*.
+* **Claude Academy**: AI Fluency: Framework & Foundations | Human-Agent Teams | Claude Platform 101.
+* **Reliance Foundation & Skill India (NSDC)**: Foundation Course in Bioinformatics *(90-Hour Intensive Program | Certified Dec 2025)* — Computational biology, genomics data structures, and molecular informatics.
+* **Healthcare & FinTech Compliance**: Healthcare API Compliance & HIPAA PHI Data Governance | FinTech Regulatory Standards & PCI-DSS Payment Processing.

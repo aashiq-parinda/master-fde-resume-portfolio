@@ -112,28 +112,45 @@ async def get_safety_logs(limit: int = 50):
     """, limit)
     return [dict(l) for l in logs]
 
-@app.post("/api/intakes/{intake_id}/reprocess")
-async def reprocess_intake(intake_id: int):
-    """Manually triggers the summarizer pipeline to re-evaluate and safety-check an intake."""
-    intake = await db_manager.fetchrow("""
-        SELECT id, patient_name, raw_symptoms 
-        FROM patient_intakes 
-        WHERE id = $1
-    """, intake_id)
-    
-    if not intake:
-        raise HTTPException(status_code=404, detail="Intake record not found.")
-        
-    try:
-        # Delete previous summaries to prevent clutter
-        await db_manager.execute("DELETE FROM visit_summaries WHERE intake_id = $1", intake_id)
-        
-        # Regenerate summary
-        summary = await generate_pre_visit_summary(intake["id"], intake["patient_name"], intake["raw_symptoms"])
-        return {
-            "status": "success",
-            "summary": summary
-        }
-    except Exception as e:
-        logger.error(f"Reprocess failed: {e}")
-        raise HTTPException(status_code=500, detail=str(e))
+@app.get("/api/traces")
+async def get_traces(limit: int = 50):
+    """Fetches recent execution traces."""
+    from src.tracing.tracer import trace_repo
+    return trace_repo.get_all(limit=limit)
+
+@app.get("/api/traces/{trace_id}")
+async def get_trace_by_id(trace_id: str):
+    """Fetches full span breakdown for a specific execution trace."""
+    from src.tracing.tracer import trace_repo
+    t = trace_repo.get_by_id(trace_id)
+    if not t:
+        raise HTTPException(status_code=404, detail="Trace not found.")
+    return t
+
+@app.get("/api/guidelines")
+async def get_guidelines():
+    """Returns clinical guidelines corpus."""
+    from src.summarizer.engine import get_guidelines_corpus
+    return get_guidelines_corpus()
+
+class RetrievalInspectRequest(BaseModel):
+    query: str
+
+@app.post("/api/retrieval/inspect")
+async def inspect_retrieval(payload: RetrievalInspectRequest):
+    """Inspects dense, sparse, RRF, and cross-encoder reranked candidates for a query."""
+    from src.summarizer.engine import retrieve_and_rerank_guidelines
+    reranked, telemetry = await retrieve_and_rerank_guidelines(payload.query)
+    return {
+        "query": payload.query,
+        "reranked_candidates": reranked,
+        "telemetry": telemetry
+    }
+
+@app.post("/api/evals/run")
+async def trigger_evals():
+    """Runs the clinical safety and RAG benchmark evaluation suite."""
+    from evals.run_evals import run_evaluation_suite
+    results = await run_evaluation_suite()
+    return results
+

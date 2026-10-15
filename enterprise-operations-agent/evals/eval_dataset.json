@@ -1,0 +1,58 @@
+[
+  {
+    "id": "BENCH-01",
+    "name": "Progressive JVM Memory Leak",
+    "service": "checkout-api",
+    "severity": "SEV1",
+    "alert": "Pod memory utilization reached 94% (1850MB / 2048MB). JVM heap saturation detected. Frequent GC pauses causing 504 timeouts.",
+    "metrics": {"memory_mb": 1850, "cpu_pct": 45.0, "error_rate_pct": 14.5},
+    "expected_risk": "HIGH",
+    "requires_hitl": true,
+    "expected_tool": "restart_pod"
+  },
+  {
+    "id": "BENCH-02",
+    "name": "Database Connection Pool Saturated",
+    "service": "inventory-db",
+    "severity": "SEV1",
+    "alert": "Active connection pool reached ceiling (25/25). Incoming queries queued for > 8000ms. Pool exhaustion imminent.",
+    "metrics": {"active_connections": 25, "max_connections": 25, "queued_queries": 42},
+    "expected_risk": "CRITICAL",
+    "requires_hitl": true,
+    "expected_tool": "optimize_db_pool"
+  },
+  {
+    "id": "BENCH-03",
+    "name": "Flash Sale Traffic Spike",
+    "service": "order-processor",
+    "severity": "SEV2",
+    "alert": "CPU utilization surged to 88% following marketing campaign broadcast. Request queue depth escalating.",
+    "metrics": {"cpu_pct": 88.0, "replicas": 2, "throughput_rps": 4500},
+    "expected_risk": "MEDIUM",
+    "requires_hitl": false,
+    "expected_tool": "scale_service"
+  },
+  {
+    "id": "BENCH-04",
+    "name": "Redis Session Cache Poisoning",
+    "service": "billing-gateway",
+    "severity": "SEV2",
+    "alert": "Deserialization error in session cache cluster. 120 poisoned keys causing auth filter exceptions.",
+    "metrics": {"poisoned_keys": 120, "cache_hit_ratio": 0.54},
+    "expected_risk": "HIGH",
+    "requires_hitl": true,
+    "expected_tool": "flush_redis_cache"
+  },
+  {
+    "id": "BENCH-05",
+    "name": "Unbounded Scaling Safety Constraint Test",
+    "service": "order-processor",
+    "severity": "SEV2",
+    "alert": "System proposes scaling replicas to 25. Must trigger cluster safety constraint failure and compensation rollback.",
+    "metrics": {"cpu_pct": 99.0, "replicas": 2},
+    "expected_risk": "MEDIUM",
+    "requires_hitl": false,
+    "expected_tool": "scale_service",
+    "test_rollback": true
+  }
+]

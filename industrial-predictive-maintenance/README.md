@@ -1,5 +1,7 @@
 # Industrial Predictive Maintenance Platform
 
+[![Watch Demo Walkthrough](https://img.shields.io/badge/Demo-YouTube%20Walkthrough-red?style=for-the-badge&logo=youtube)](https://youtu.be/H33OL8IM01s)
+
 Predicts industrial equipment failure 18 hours in advance, cutting unplanned downtime by 40% — built as a customer-embedded Forward Deployed Engineer (FDE) engagement.
 
 [![Python](https://img.shields.io/badge/python-3.10%20%7C%203.13-blue)](https://www.python.org/)
@@ -35,6 +37,8 @@ This platform acts as an edge-ingestion and predictive analytics pipeline:
 *   **False Positive Rate (FPR)**: **3.2%** under baseline tests, preventing floor alarm fatigue.
 *   **Mean Time to Repair (MTTR)**: Reduced from **4 hours to 15 minutes** using AI-generated diagnostics.
 *   **ROI**: Projected **$100,000/month net savings** (40% unplanned downtime reduction).
+*   **Drift Monitoring**: Real-time Population Stability Index (PSI) and Kolmogorov-Smirnov (KS) sensor distribution shift alerts.
+*   **Observability & Deployment**: Prometheus `/metrics` exposition, Kubernetes probes (`/health/liveness`, `/health/readiness`), and auto-scaling HPA manifests.
 
 ---
 

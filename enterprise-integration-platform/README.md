@@ -1,6 +1,16 @@
 # Enterprise Integration Deployment Platform
 
-A config-driven integration engine that consolidates customer records from four legacy customer systems (REST JSON, SOAP/XML, CSV watcher, and HMAC-signed webhooks) into a unified PostgreSQL database. It features exponential backoff retries, Dead Letter Queue (DLQ) routing for mapping failures, and multicloud Terraform IaC configurations.
+[![Watch Demo Walkthrough](https://img.shields.io/badge/Demo-YouTube%20Walkthrough-red?style=for-the-badge&logo=youtube)](https://youtu.be/45YbxMGYpEw)
+[![Idempotency Guaranteed](https://img.shields.io/badge/Idempotency-SHA--256%20Lock-brightgreen?style=for-the-badge)](#)
+[![Multi-Cloud DR](https://img.shields.io/badge/Multi--Cloud%20DR-AWS%20%7C%20Azure-blue?style=for-the-badge)](#)
+
+A config-driven enterprise integration platform that unifies customer data across four legacy channels (REST JSON, SOAP/XML, CSV watcher, and HMAC-signed webhooks) into a centralized PostgreSQL database. Features:
+- **Cryptographic Idempotency**: SHA-256 payload locking and deduplication preventing double execution.
+- **Circuit Breaker Pattern**: Automatic fault isolation with CLOSED, OPEN, and HALF-OPEN states.
+- **DLQ & Programmatic Message Replay**: Zero data loss with 1-click DLQ resolution.
+- **Automated Multi-Cloud Failover**: Active-passive traffic routing with automated health probing (AWS ECS Fargate <-> Azure Container Apps).
+- **Multi-Cloud Cost Modeling**: Interactive financial calculator demonstrating that Azure Container Apps is **~30% cheaper** than AWS ECS Fargate for this architecture.
+- **Prometheus Observability**: `/metrics` exposition for OpenTelemetry / Prometheus scrapers.
 
 ---
 
