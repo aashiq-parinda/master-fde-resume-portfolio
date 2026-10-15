@@ -183,6 +183,16 @@ class ToolRegistry:
                 "dispatched": True
             }
 
-        return False, {"error": f"Unknown tool: '{tool_name}'"}
-
 tool_registry = ToolRegistry()
+
+def reset_cluster_state():
+    CLUSTER_STATE["services"] = {
+        "order-processor": {"replicas": 2, "cpu_pct": 88.0, "memory_mb": 750, "status": "HEALTHY"},
+        "checkout-api": {"replicas": 3, "cpu_pct": 45.0, "memory_mb": 1850, "status": "MEMORY_LEAK"},
+        "billing-gateway": {"replicas": 2, "cpu_pct": 30.0, "memory_mb": 512, "status": "HEALTHY"},
+        "inventory-db": {"max_connections": 25, "active_connections": 25, "status": "POOL_EXHAUSTION"}
+    }
+    CLUSTER_STATE["cache"] = {"keys_count": 45000, "poisoned_keys": 120}
+    CLUSTER_STATE["tickets"].clear()
+    CLUSTER_STATE["pagerduty_alerts"].clear()
+

@@ -16,6 +16,7 @@ from src.agent.state import IncidentState
 from src.agent.graph import operations_graph
 from src.audit.logger import audit_ledger
 from src.evals.evaluator import evaluator
+from src.tools.registry import reset_cluster_state
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("api")
@@ -85,6 +86,14 @@ async def create_and_triage_incident(payload: IncidentCreateRequest):
 async def list_incidents(limit: int = 50):
     """Lists all operational incidents."""
     return [state.model_dump() for state in reversed(list(INCIDENTS_DB.values())[-limit:])]
+
+@app.delete("/api/incidents")
+async def clear_all_incidents():
+    """Resets all incidents, audit ledger, and resets cluster state to initial baseline."""
+    INCIDENTS_DB.clear()
+    audit_ledger.chain.clear()
+    reset_cluster_state()
+    return {"message": "All incidents, audit ledgers, and cluster states reset successfully."}
 
 @app.get("/api/incidents/{incident_id}")
 async def get_incident(incident_id: str):

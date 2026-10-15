@@ -157,6 +157,15 @@ with st.sidebar.form("incident_dispatch_form"):
             else:
                 st.sidebar.error("Ingestion failed.")
 
+if st.sidebar.button("🧹 Clear All Incidents & Reset", help="Resets all in-memory incidents, audit trails, and cluster baseline."):
+    try:
+        requests.delete(f"{API_URL}/api/incidents", timeout=3.0)
+        st.session_state.pop("selected_inc_id", None)
+        st.sidebar.success("All incidents reset!")
+        st.rerun()
+    except Exception as e:
+        st.sidebar.error(f"Reset failed: {e}")
+
 st.title("🤖 Enterprise Operations AI Agent Console")
 st.markdown("### Autonomous Site Reliability Engineering, Tool Calling & Human-In-The-Loop Governance")
 
