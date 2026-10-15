@@ -2,6 +2,14 @@ import logging
 from typing import Dict, Any, Optional
 from datetime import datetime, timezone
 
+try:
+    from langsmith import traceable
+except ImportError:
+    def traceable(*args, **kwargs):
+        def decorator(f):
+            return f
+        return decorator
+
 from src.agent.state import IncidentState, ProposedAction, ToolExecutionRecord
 from src.tools.registry import tool_registry
 from src.recovery.compensation import compensation_engine
@@ -18,6 +26,7 @@ class OperationsStateGraph:
         pass
 
     # Node 1: Alert Ingestion
+    @traceable(name="Node_Alert_Ingest", run_type="chain")
     def ingest_node(self, state: IncidentState) -> IncidentState:
         state.current_node = "INGEST"
         state.node_history.append("INGEST")
@@ -38,6 +47,7 @@ class OperationsStateGraph:
         return state
 
     # Node 2: Automated Diagnosis
+    @traceable(name="Node_Automated_Diagnosis", run_type="chain")
     def diagnose_node(self, state: IncidentState) -> IncidentState:
         state.current_node = "DIAGNOSE"
         state.node_history.append("DIAGNOSE")
@@ -69,6 +79,7 @@ class OperationsStateGraph:
         return state
 
     # Node 3: Remediation Planning & Risk Assessment
+    @traceable(name="Node_Remediation_Planning", run_type="chain")
     def plan_node(self, state: IncidentState) -> IncidentState:
         state.current_node = "PLAN"
         state.node_history.append("PLAN")
@@ -148,6 +159,7 @@ class OperationsStateGraph:
         return state
 
     # Node 4: Human-in-the-Loop (HITL) Gate
+    @traceable(name="Node_HITL_Approval_Gate", run_type="chain")
     def human_approval_gate_node(self, state: IncidentState) -> IncidentState:
         state.current_node = "APPROVAL_GATE"
         state.node_history.append("APPROVAL_GATE")
@@ -169,6 +181,7 @@ class OperationsStateGraph:
         return state
 
     # Node 5: Tool Execution
+    @traceable(name="Node_Tool_Execution", run_type="chain")
     def execute_node(self, state: IncidentState) -> IncidentState:
         state.current_node = "EXECUTE"
         state.node_history.append("EXECUTE")
@@ -201,6 +214,7 @@ class OperationsStateGraph:
         return state
 
     # Node 6: Verification
+    @traceable(name="Node_Health_Verification", run_type="chain")
     def verify_node(self, state: IncidentState) -> IncidentState:
         state.current_node = "VERIFY"
         state.node_history.append("VERIFY")
@@ -225,6 +239,7 @@ class OperationsStateGraph:
         return state
 
     # Node 7: Compensation Rollback (Triggered on failure)
+    @traceable(name="Node_Compensation_Rollback", run_type="chain")
     def rollback_node(self, state: IncidentState) -> IncidentState:
         state.current_node = "ROLLBACK"
         state.node_history.append("ROLLBACK")
@@ -242,6 +257,7 @@ class OperationsStateGraph:
         return state
 
     # Node 8: Finalize Incident
+    @traceable(name="Node_Incident_Finalize", run_type="chain")
     def finalize_node(self, state: IncidentState) -> IncidentState:
         state.current_node = "FINALIZE"
         state.node_history.append("FINALIZE")
@@ -265,6 +281,7 @@ class OperationsStateGraph:
         return state
 
     # Execution Runner: Drives Graph until Completion or HITL Pause
+    @traceable(name="OperationsStateGraph.run", run_type="chain")
     def run(self, state: IncidentState) -> IncidentState:
         """
         Executes State Graph nodes following conditional edges.

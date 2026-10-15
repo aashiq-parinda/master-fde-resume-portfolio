@@ -160,6 +160,16 @@ with st.sidebar.form("incident_dispatch_form"):
 st.title("🤖 Enterprise Operations AI Agent Console")
 st.markdown("### Autonomous Site Reliability Engineering, Tool Calling & Human-In-The-Loop Governance")
 
+st.markdown("""
+<div style="background: linear-gradient(90deg, #0f172a 0%, #1e1b4b 100%); border: 1px solid #6366f1; border-radius: 8px; padding: 12px 18px; margin-bottom: 20px; display: flex; align-items: center; justify-content: space-between;">
+    <div>
+        <span style="font-weight: 700; color: #a5b4fc; font-size: 14px;">🔗 LANGSMITH TRACING ACTIVE:</span>
+        <span style="color: #e2e8f0; font-size: 13px; margin-left: 8px;">Project <code>enterprise-operations-agent</code> &bull; Live state transitions, HITL gates & tool execution traces streaming to LangSmith</span>
+    </div>
+    <a href="https://smith.langchain.com" target="_blank" style="background-color: #4f46e5; color: white; padding: 6px 14px; border-radius: 6px; text-decoration: none; font-size: 12px; font-weight: 600;">Open LangSmith Console ↗</a>
+</div>
+""", unsafe_allow_html=True)
+
 incidents = get_data("/api/incidents") or []
 
 # Calculate counts

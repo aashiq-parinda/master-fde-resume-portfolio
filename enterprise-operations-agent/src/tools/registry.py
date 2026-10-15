@@ -1,6 +1,14 @@
 import logging
 from typing import Dict, Any, Tuple, Optional
 
+try:
+    from langsmith import traceable
+except ImportError:
+    def traceable(*args, **kwargs):
+        def decorator(f):
+            return f
+        return decorator
+
 logger = logging.getLogger("tools")
 
 # Mock cluster operational state
@@ -81,6 +89,7 @@ class ToolRegistry:
             }
         ]
 
+    @traceable(name="ToolRegistry.execute_tool", run_type="tool")
     def execute_tool(self, tool_name: str, arguments: Dict[str, Any]) -> Tuple[bool, Dict[str, Any]]:
         """
         Executes operational tool with parameter validation.

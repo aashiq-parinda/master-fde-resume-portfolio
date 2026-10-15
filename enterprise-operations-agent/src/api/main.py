@@ -1,6 +1,12 @@
+import os
 import uuid
 import logging
 from typing import Dict, Any, List, Optional
+from dotenv import load_dotenv
+
+# Load LangSmith and agent environment variables
+load_dotenv()
+
 from pydantic import BaseModel, Field
 from fastapi import FastAPI, HTTPException, status
 from fastapi.middleware.cors import CORSMiddleware
