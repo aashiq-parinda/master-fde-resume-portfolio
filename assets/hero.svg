@@ -1,0 +1,188 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 340" width="100%" height="auto" role="img" aria-label="Ashraf Khan - Forward Deployed Engineer &amp; Multi-Cloud Solutions Architect">
+  <defs>
+    <!-- Background Gradients -->
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#10070C" />
+      <stop offset="50%" stop-color="#190B12" />
+      <stop offset="100%" stop-color="#10070C" />
+    </linearGradient>
+
+    <!-- Aura Radial Gradient -->
+    <radialGradient id="auraGlow" cx="75%" cy="40%" r="55%">
+      <stop offset="0%" stop-color="#701A3D" stop-opacity="0.45">
+        <animate attributeName="stop-opacity" values="0.45;0.25;0.45" dur="6s" repeatCount="indefinite" />
+      </stop>
+      <stop offset="60%" stop-color="#451126" stop-opacity="0.15" />
+      <stop offset="100%" stop-color="#10070C" stop-opacity="0" />
+    </radialGradient>
+
+    <radialGradient id="leftGlow" cx="20%" cy="30%" r="45%">
+      <stop offset="0%" stop-color="#451126" stop-opacity="0.35" />
+      <stop offset="100%" stop-color="#10070C" stop-opacity="0" />
+    </radialGradient>
+
+    <!-- Typography Gradients -->
+    <linearGradient id="titleGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#FFFFFF" />
+      <stop offset="35%" stop-color="#F8F0F3" />
+      <stop offset="70%" stop-color="#E5B5C7" />
+      <stop offset="100%" stop-color="#C77B9B" />
+    </linearGradient>
+
+    <linearGradient id="beamGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#701A3D" stop-opacity="0.1" />
+      <stop offset="40%" stop-color="#C77B9B" stop-opacity="0.9" />
+      <stop offset="60%" stop-color="#F8F0F3" stop-opacity="1" />
+      <stop offset="80%" stop-color="#C77B9B" stop-opacity="0.9" />
+      <stop offset="100%" stop-color="#701A3D" stop-opacity="0.1" />
+      <animate attributeName="x1" values="-100%;100%;-100%" dur="7s" repeatCount="indefinite" />
+      <animate attributeName="x2" values="0%;200%;0%" dur="7s" repeatCount="indefinite" />
+    </linearGradient>
+
+    <linearGradient id="orbitGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#C77B9B" />
+      <stop offset="50%" stop-color="#701A3D" />
+      <stop offset="100%" stop-color="#451126" />
+    </linearGradient>
+
+    <!-- Technical Grid Pattern -->
+    <pattern id="techGrid" width="28" height="28" patternUnits="userSpaceOnUse">
+      <path d="M 28 0 L 0 0 0 28" fill="none" stroke="#451126" stroke-width="0.75" stroke-opacity="0.35" />
+      <circle cx="28" cy="28" r="0.75" fill="#C77B9B" fill-opacity="0.25" />
+    </pattern>
+
+    <!-- Filter for Glow Effects -->
+    <filter id="softGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="3" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+
+  <style>
+    .font-mono { font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace; }
+    .font-sans { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+    .tag-badge { font-size: 11px; letter-spacing: 2px; text-transform: uppercase; fill: #E5B5C7; }
+    .hero-title { font-size: 46px; font-weight: 800; letter-spacing: 3.5px; fill: url(#titleGrad); }
+    .hero-subtitle { font-size: 14.5px; font-weight: 500; letter-spacing: 2px; fill: #E5B5C7; }
+    .hero-desc { font-size: 13px; fill: #C77B9B; letter-spacing: 0.5px; }
+    .stat-label { font-size: 10px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; fill: #C77B9B; }
+    .stat-value { font-size: 14px; font-weight: 700; letter-spacing: 0.5px; fill: #F8F0F3; }
+  </style>
+
+  <!-- Container Box with Burgundy Border -->
+  <rect x="1" y="1" width="878" height="338" rx="16" fill="url(#bgGrad)" stroke="#451126" stroke-width="1.5" />
+
+  <!-- Background Lighting Auras -->
+  <rect x="1" y="1" width="878" height="338" rx="16" fill="url(#auraGlow)" />
+  <rect x="1" y="1" width="878" height="338" rx="16" fill="url(#leftGlow)" />
+
+  <!-- Subtle Technical Grid Overlay -->
+  <rect x="1" y="1" width="878" height="338" rx="16" fill="url(#techGrid)" />
+
+  <!-- Restrained Orbital Geometry (Right Side) -->
+  <g transform="translate(710, 160)">
+    <!-- Outer Orbit Ring -->
+    <circle cx="0" cy="0" r="115" fill="none" stroke="#701A3D" stroke-width="1" stroke-dasharray="4,8" stroke-opacity="0.6">
+      <animateTransform attributeName="transform" type="rotate" from="0" to="360" dur="50s" repeatCount="indefinite" />
+    </circle>
+
+    <!-- Middle Elliptical Orbit -->
+    <ellipse cx="0" cy="0" rx="90" ry="55" fill="none" stroke="#C77B9B" stroke-width="1.2" stroke-opacity="0.4" transform="rotate(-25)">
+      <animateTransform attributeName="transform" type="rotate" from="-25" to="335" dur="30s" repeatCount="indefinite" />
+    </ellipse>
+
+    <!-- Inner Orbit Ring with Dash Pattern -->
+    <circle cx="0" cy="0" r="65" fill="none" stroke="#E5B5C7" stroke-width="1.2" stroke-dasharray="24,12" stroke-opacity="0.5">
+      <animateTransform attributeName="transform" type="rotate" from="360" to="0" dur="25s" repeatCount="indefinite" />
+    </circle>
+
+    <!-- Geometric Node Core -->
+    <polygon points="0,-28 24,-14 24,14 0,28 -24,14 -24,-14" fill="#190B12" stroke="#C77B9B" stroke-width="1.5">
+      <animateTransform attributeName="transform" type="rotate" from="0" to="360" dur="20s" repeatCount="indefinite" />
+    </polygon>
+    <polygon points="0,-16 14,-8 14,8 0,16 -14,8 -14,-8" fill="#451126" stroke="#F8F0F3" stroke-width="1" opacity="0.8">
+      <animateTransform attributeName="transform" type="rotate" from="360" to="0" dur="15s" repeatCount="indefinite" />
+    </polygon>
+
+    <!-- Center Glowing Core -->
+    <circle cx="0" cy="0" r="5" fill="#F8F0F3" filter="url(#softGlow)">
+      <animate attributeName="r" values="4;6.5;4" dur="3s" repeatCount="indefinite" />
+    </circle>
+
+    <!-- Orbiting Satellite Node 1 -->
+    <g>
+      <animateTransform attributeName="transform" type="rotate" from="0" to="360" dur="12s" repeatCount="indefinite" />
+      <circle cx="90" cy="0" r="3.5" fill="#F8F0F3" filter="url(#softGlow)" />
+      <circle cx="90" cy="0" r="6" fill="none" stroke="#C77B9B" stroke-width="1" stroke-opacity="0.6" />
+    </g>
+
+    <!-- Orbiting Satellite Node 2 -->
+    <g>
+      <animateTransform attributeName="transform" type="rotate" from="180" to="-180" dur="18s" repeatCount="indefinite" />
+      <circle cx="115" cy="0" r="2.5" fill="#E5B5C7" />
+    </g>
+  </g>
+
+  <!-- Left Content Area -->
+  <g transform="translate(56, 48)">
+    <!-- Top Pill / Status Badge -->
+    <g>
+      <rect x="0" y="0" width="280" height="26" rx="13" fill="#190B12" stroke="#451126" stroke-width="1" />
+      <!-- Pulsing Activity Dot -->
+      <circle cx="16" cy="13" r="4" fill="#C77B9B">
+        <animate attributeName="opacity" values="1;0.35;1" dur="2s" repeatCount="indefinite" />
+        <animate attributeName="r" values="3.5;4.5;3.5" dur="2s" repeatCount="indefinite" />
+      </circle>
+      <text x="28" y="17" class="font-mono tag-badge">FORWARD DEPLOYED · ARCHITECT</text>
+    </g>
+
+    <!-- Main Title: ASHRAF KHAN -->
+    <text x="0" y="80" class="font-sans hero-title">ASHRAF KHAN</text>
+
+    <!-- Glowing Underline Beam -->
+    <rect x="0" y="94" width="510" height="2" fill="#451126" />
+    <rect x="0" y="94" width="510" height="2" fill="url(#beamGrad)" />
+
+    <!-- Role / Positioning -->
+    <text x="0" y="126" class="font-sans hero-subtitle">FORWARD DEPLOYED ENGINEER · MULTI-CLOUD ARCHITECT · ENTERPRISE AI</text>
+
+    <!-- Technical Philosophy / Mission -->
+    <text x="0" y="152" class="font-sans hero-desc">Building resilient multi-cloud architectures, deterministic AI safety &amp; autonomous agent governance.</text>
+
+    <!-- Animated Telemetry Waveform -->
+    <path d="M 0 178 Q 60 168, 120 178 T 240 178 T 360 178 T 480 178" fill="none" stroke="#701A3D" stroke-width="1.5" stroke-opacity="0.6" />
+    <path d="M 0 178 Q 60 164, 120 178 T 240 178 T 360 178 T 480 178" fill="none" stroke="#C77B9B" stroke-width="1.5" stroke-dasharray="80 140">
+      <animate attributeName="stroke-dashoffset" values="0;-220" dur="4s" repeatCount="indefinite" />
+    </path>
+  </g>
+
+  <!-- Lower Technical Telemetry Metrics Bar -->
+  <g transform="translate(56, 246)">
+    <!-- Panel Backdrop -->
+    <rect x="0" y="0" width="768" height="64" rx="10" fill="#190B12" fill-opacity="0.85" stroke="#451126" stroke-width="1" />
+
+    <!-- Metric 1: Enterprise Deployments -->
+    <g transform="translate(24, 16)">
+      <text x="0" y="12" class="font-mono stat-label">ENTERPRISE SYSTEMS</text>
+      <text x="0" y="32" class="font-sans stat-value">4 FDE Architectures</text>
+    </g>
+
+    <!-- Divider 1 -->
+    <line x1="240" y1="12" x2="240" y2="52" stroke="#451126" stroke-width="1" />
+
+    <!-- Metric 2: AI Safety Grounding -->
+    <g transform="translate(264, 16)">
+      <text x="0" y="12" class="font-mono stat-label">CLINICAL SAFETY / RAG</text>
+      <text x="0" y="32" class="font-sans stat-value">0.0% Diagnostic Leakage</text>
+    </g>
+
+    <!-- Divider 2 -->
+    <line x1="504" y1="12" x2="504" y2="52" stroke="#451126" stroke-width="1" />
+
+    <!-- Metric 3: Production Commercial Apps -->
+    <g transform="translate(528, 16)">
+      <text x="0" y="12" class="font-mono stat-label">COMMERCIAL APPS &amp; PORTALS</text>
+      <text x="0" y="32" class="font-sans stat-value">10+ Published · 5+ Yrs Exp</text>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 140" width="100%" height="auto" role="img" aria-label="Ashraf Khan - Profile Footer">
+  <defs>
+    <!-- Background Gradient -->
+    <linearGradient id="footerBg" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#10070C" />
+      <stop offset="50%" stop-color="#190B12" />
+      <stop offset="100%" stop-color="#10070C" />
+    </linearGradient>
+
+    <!-- Glowing Accent Beam -->
+    <linearGradient id="footerBeam" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#451126" stop-opacity="0" />
+      <stop offset="30%" stop-color="#701A3D" stop-opacity="0.8" />
+      <stop offset="50%" stop-color="#C77B9B" stop-opacity="1" />
+      <stop offset="70%" stop-color="#701A3D" stop-opacity="0.8" />
+      <stop offset="100%" stop-color="#451126" stop-opacity="0" />
+      <animate attributeName="x1" values="-100%;100%;-100%" dur="8s" repeatCount="indefinite" />
+      <animate attributeName="x2" values="0%;200%;0%" dur="8s" repeatCount="indefinite" />
+    </linearGradient>
+
+    <!-- Subtle Grid -->
+    <pattern id="footerGrid" width="24" height="24" patternUnits="userSpaceOnUse">
+      <path d="M 24 0 L 0 0 0 24" fill="none" stroke="#451126" stroke-width="0.5" stroke-opacity="0.3" />
+    </pattern>
+
+    <radialGradient id="footerAura" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#701A3D" stop-opacity="0.35" />
+      <stop offset="100%" stop-color="#10070C" stop-opacity="0" />
+    </radialGradient>
+  </defs>
+
+  <style>
+    .f-mono { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+    .f-sans { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+    .f-claim { font-size: 13px; font-weight: 700; letter-spacing: 3px; fill: #F8F0F3; text-anchor: middle; text-transform: uppercase; }
+    .f-sub { font-size: 11px; font-weight: 500; letter-spacing: 2px; fill: #C77B9B; text-anchor: middle; }
+    .f-coords { font-size: 10px; letter-spacing: 1.5px; fill: #E5B5C7; text-anchor: middle; }
+  </style>
+
+  <!-- Box -->
+  <rect x="1" y="1" width="878" height="138" rx="14" fill="url(#footerBg)" stroke="#451126" stroke-width="1.2" />
+  <rect x="1" y="1" width="878" height="138" rx="14" fill="url(#footerAura)" />
+  <rect x="1" y="1" width="878" height="138" rx="14" fill="url(#footerGrid)" />
+
+  <!-- Orbit Accent in Center Background -->
+  <g transform="translate(440, 70)">
+    <circle cx="0" cy="0" r="50" fill="none" stroke="#701A3D" stroke-width="1" stroke-dasharray="3,6" stroke-opacity="0.4">
+      <animateTransform attributeName="transform" type="rotate" from="0" to="360" dur="40s" repeatCount="indefinite" />
+    </circle>
+  </g>
+
+  <!-- Text Hierarchy -->
+  <g transform="translate(440, 48)">
+    <text x="0" y="0" class="f-sans f-claim">ENGINEERED FOR RESILIENCE · GOVERNED BY CODE · PROVEN IN PRODUCTION</text>
+    <text x="0" y="24" class="f-sans f-sub">Ashraf Khan · Forward Deployed Systems &amp; Multi-Cloud Architecture</text>
+    <text x="0" y="44" class="f-mono f-coords">MUMBAI, INDIA [19.0760° N, 72.8777° E] · GITHUB: @aashiq-parinda</text>
+  </g>
+
+  <!-- Bottom Animated Glowing Beam -->
+  <rect x="40" y="128" width="800" height="2" fill="#451126" />
+  <rect x="40" y="128" width="800" height="2" fill="url(#footerBeam)" />
+</svg>

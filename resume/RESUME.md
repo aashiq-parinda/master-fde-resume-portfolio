@@ -1,6 +1,6 @@
 # Ashraf Khan
 **Forward Deployed Engineer (FDE) · Multi-Cloud Solutions Architect · Senior Full-Stack Systems Engineer**  
-📍 Mumbai, Maharashtra, India | 📧 [ashrafksalim1@gmail.com](mailto:ashrafksalim1@gmail.com) | 📞 +91-8779559898  
+📍 Mumbai, Maharashtra, India | 📧 [ashrafksalim1@gmail.com](mailto:ashrafksalim1@gmail.com) | 📞 +91 91377 85922  
 🌐 **GitHub**: [github.com/aashiq-parinda](https://github.com/aashiq-parinda) | 💼 **LinkedIn**: [linkedin.com/in/ashrafksalim](https://linkedin.com/in/ashrafksalim) | 📱 **10+ Published Apps** (App Store & Play Store)  
 
 ---
