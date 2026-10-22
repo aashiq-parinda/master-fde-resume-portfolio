@@ -9,8 +9,8 @@
 
     <!-- Celestial Burgundy Glow behind Subject -->
     <radialGradient id="pAura" cx="400" cy="350" r="320" gradientUnits="userSpaceOnUse">
-      <stop offset="0%" stop-color="#701A3D" stop-opacity="0.75">
-        <animate attributeName="stop-opacity" values="0.75;0.5;0.75" dur="6s" repeatCount="indefinite" />
+      <stop offset="0%" stop-color="#701A3D" stop-opacity="0.8">
+        <animate attributeName="stop-opacity" values="0.8;0.55;0.8" dur="6s" repeatCount="indefinite" />
       </stop>
       <stop offset="50%" stop-color="#451126" stop-opacity="0.35" />
       <stop offset="100%" stop-color="#10070C" stop-opacity="0" />
@@ -22,21 +22,22 @@
       <circle cx="32" cy="32" r="0.75" fill="#C77B9B" fill-opacity="0.2" />
     </pattern>
 
-    <!-- Glowing Filter -->
+    <!-- Glowing Filter for Logos & Nodes -->
+    <filter id="logoGlow" x="-30%" y="-30%" width="160%" height="160%">
+      <feDropShadow dx="0" dy="0" stdDeviation="6" flood-color="#C77B9B" flood-opacity="0.65" />
+      <feDropShadow dx="0" dy="2" stdDeviation="8" flood-color="#000000" flood-opacity="0.9" />
+    </filter>
+
     <filter id="pGlow" x="-30%" y="-30%" width="160%" height="160%">
       <feGaussianBlur stdDeviation="5" result="blur" />
       <feComposite in="SourceGraphic" in2="blur" operator="over" />
-    </filter>
-
-    <filter id="nodeShadow" x="-20%" y="-20%" width="140%" height="140%">
-      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#000000" flood-opacity="0.8" />
     </filter>
   </defs>
 
   <style>
     .font-mono { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; }
     .font-sans { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
-    .logo-lbl { font-size: 8.5px; font-weight: 700; letter-spacing: 0.5px; fill: #F8F0F3; text-anchor: middle; }
+    .logo-lbl { font-size: 10px; font-weight: 700; letter-spacing: 1px; fill: #E5B5C7; text-anchor: middle; }
   </style>
 
   <!-- Base 1:1 Canvas -->
@@ -53,113 +54,105 @@
   </g>
 
   <!-- ======================================================== -->
-  <!-- REVOLVING LLM TOOLS ORBITS (BEHIND ASHRAF)               -->
+  <!-- REVOLVING LLM TOOLS (NO CIRCULAR BORDER, BIGGER GLYPHS)  -->
   <!-- ======================================================== -->
   <g id="orbiting-system" transform="translate(400, 360)">
     <!-- Master Continuous Slow Rotation -->
     <animateTransform attributeName="transform" type="rotate" from="0" to="360" dur="50s" repeatCount="indefinite" additive="sum" />
 
-    <!-- ORBIT RING 1: RADIUS 280 (Outer Orbit - 4 Major AI/LLM Tools) -->
-    <!-- Node 1: OpenAI (at 0 deg) -->
+    <!-- ====================================================== -->
+    <!-- OUTER ORBIT: RADIUS 335 (4 Major Foundation AI Models) -->
+    <!-- ====================================================== -->
+
+    <!-- Node 1: OpenAI (at 0 deg / East) -->
     <g transform="translate(335, 0)">
-      <!-- Counter-rotate so logo stays upright -->
       <animateTransform attributeName="transform" type="rotate" from="0" to="-360" dur="50s" repeatCount="indefinite" additive="sum" />
-      <circle cx="0" cy="0" r="28" fill="#190B12" stroke="#C77B9B" stroke-width="1.8" filter="url(#nodeShadow)" />
-      <circle cx="0" cy="0" r="25" fill="#451126" fill-opacity="0.6" />
-      <!-- OpenAI Logo Glyph (Spiral Petals) -->
-      <g transform="scale(0.85) translate(0, -2)">
-        <path d="M 0 -14 L 6 -10 L 6 -3 L 0 -7 Z M 12 -7 L 12 1 L 6 4 L 6 -3 Z M 12 7 L 6 10 L 0 7 L 6 3 Z M 0 14 L -6 10 L -6 3 L 0 7 Z M -12 7 L -12 -1 L -6 -4 L -6 3 Z M -12 -7 L -6 -10 L 0 -7 L -6 -3 Z" fill="#FFFFFF" />
-        <circle cx="0" cy="0" r="3" fill="#F8F0F3" />
+      <g filter="url(#logoGlow)" transform="scale(1.7)">
+        <!-- OpenAI Vector Glyph -->
+        <path d="M0,-14 L5,-11 L5,-5 L0,-8 Z M11,-7 L11,0 L6,3 L6,-4 Z M11,7 L6,10 L0,7 L5,4 Z M0,14 L-5,11 L-5,5 L0,8 Z M-11,7 L-11,0 L-6,-3 L-6,4 Z M-11,-7 L-6,-10 L0,-7 L-5,-4 Z" fill="#FFFFFF" />
+        <circle cx="0" cy="0" r="3.5" fill="#F8F0F3" />
       </g>
-      <text x="0" y="18" class="font-mono logo-lbl">OPENAI</text>
+      <text x="0" y="32" class="font-mono logo-lbl">OPENAI</text>
     </g>
 
-    <!-- Node 2: Anthropic Claude (at 90 deg) -->
+    <!-- Node 2: Anthropic Claude (at 90 deg / South) -->
     <g transform="translate(0, 335)">
       <animateTransform attributeName="transform" type="rotate" from="0" to="-360" dur="50s" repeatCount="indefinite" additive="sum" />
-      <circle cx="0" cy="0" r="28" fill="#190B12" stroke="#C77B9B" stroke-width="1.8" filter="url(#nodeShadow)" />
-      <circle cx="0" cy="0" r="25" fill="#451126" fill-opacity="0.6" />
-      <!-- Claude Starburst Glyph -->
-      <g transform="scale(0.9) translate(0, -3)">
-        <path d="M -3 -12 L 3 -12 L 2 -4 L 8 -9 L 12 -5 L 5 -1 L 12 3 L 8 7 L 2 2 L 3 10 L -3 10 L -2 2 L -8 7 L -12 3 L -5 -1 L -12 -5 L -8 -9 L -2 -4 Z" fill="#E5B5C7" />
+      <g filter="url(#logoGlow)" transform="scale(1.8)">
+        <!-- Claude Starburst Glyph -->
+        <path d="M-2.5,-13 L2.5,-13 L2,-4 L8.5,-9 L12,-5.5 L5.5,-1 L12.5,3 L9,7 L2.5,2 L2.5,12 L-2.5,12 L-2,2 L-8.5,7 L-12,3.5 L-5.5,-1 L-12.5,-5 L-9,-9 L-2.5,-4 Z" fill="#E5B5C7" />
       </g>
-      <text x="0" y="18" class="font-mono logo-lbl">CLAUDE</text>
+      <text x="0" y="32" class="font-mono logo-lbl">CLAUDE</text>
     </g>
 
-    <!-- Node 3: LangChain / LangGraph (at 180 deg) -->
+    <!-- Node 3: LangChain / LangGraph (at 180 deg / West) -->
     <g transform="translate(-335, 0)">
       <animateTransform attributeName="transform" type="rotate" from="0" to="-360" dur="50s" repeatCount="indefinite" additive="sum" />
-      <circle cx="0" cy="0" r="28" fill="#190B12" stroke="#C77B9B" stroke-width="1.8" filter="url(#nodeShadow)" />
-      <circle cx="0" cy="0" r="25" fill="#451126" fill-opacity="0.6" />
-      <!-- LangChain Parrot / Chain Glyph -->
-      <g transform="scale(0.9) translate(0, -3)">
-        <!-- Stylized Parrot/Bird -->
-        <path d="M -4 -10 Q 6 -12 8 -4 Q 10 4 4 10 L -2 10 Q -8 4 -4 -10 Z" fill="#F8F0F3" />
-        <circle cx="1" cy="-5" r="2" fill="#190B12" />
-        <path d="M 6 -5 L 12 -4 L 7 -1 Z" fill="#C77B9B" />
+      <g filter="url(#logoGlow)" transform="scale(1.8)">
+        <!-- LangChain Parrot Glyph -->
+        <path d="M-5,-11 Q7,-13 9,-4 Q11,5 4,12 L-3,12 Q-9,5 -5,-11 Z" fill="#FFFFFF" />
+        <circle cx="1.5" cy="-5" r="2.2" fill="#10070C" />
+        <path d="M7,-5 L14,-3 L8,0 Z" fill="#C77B9B" />
+        <!-- Wing feather accent -->
+        <path d="M-1,1 Q5,4 2,9" fill="none" stroke="#701A3D" stroke-width="1.5" />
       </g>
-      <text x="0" y="18" class="font-mono logo-lbl">LANGCHAIN</text>
+      <text x="0" y="32" class="font-mono logo-lbl">LANGCHAIN</text>
     </g>
 
-    <!-- Node 4: Hugging Face (at 270 deg) -->
+    <!-- Node 4: Hugging Face (at 270 deg / North) -->
     <g transform="translate(0, -335)">
       <animateTransform attributeName="transform" type="rotate" from="0" to="-360" dur="50s" repeatCount="indefinite" additive="sum" />
-      <circle cx="0" cy="0" r="28" fill="#190B12" stroke="#C77B9B" stroke-width="1.8" filter="url(#nodeShadow)" />
-      <circle cx="0" cy="0" r="25" fill="#451126" fill-opacity="0.6" />
-      <!-- Hugging Face Emoji Glyph -->
-      <g transform="scale(0.9) translate(0, -3)">
-        <circle cx="0" cy="0" r="11" fill="none" stroke="#FFFFFF" stroke-width="1.8" />
-        <circle cx="-4" cy="-2" r="1.8" fill="#FFFFFF" />
-        <circle cx="4" cy="-2" r="1.8" fill="#FFFFFF" />
-        <path d="M -5 3 Q 0 8 5 3" fill="none" stroke="#FFFFFF" stroke-width="1.8" stroke-linecap="round" />
-        <!-- Hugging hands -->
-        <path d="M -11 5 Q -14 0 -10 -2" fill="none" stroke="#C77B9B" stroke-width="1.8" stroke-linecap="round" />
-        <path d="M 11 5 Q 14 0 10 -2" fill="none" stroke="#C77B9B" stroke-width="1.8" stroke-linecap="round" />
+      <g filter="url(#logoGlow)" transform="scale(1.8)">
+        <!-- Hugging Face Emoji Glyph -->
+        <circle cx="0" cy="0" r="12" fill="none" stroke="#FFFFFF" stroke-width="2" />
+        <circle cx="-4.5" cy="-2.5" r="2" fill="#FFFFFF" />
+        <circle cx="4.5" cy="-2.5" r="2" fill="#FFFFFF" />
+        <path d="M-5.5,3.5 Q0,9 5.5,3.5" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" />
+        <!-- Hugging Hands -->
+        <path d="M-12,5 Q-15,-1 -10,-3" fill="none" stroke="#E5B5C7" stroke-width="2" stroke-linecap="round" />
+        <path d="M12,5 Q15,-1 10,-3" fill="none" stroke="#E5B5C7" stroke-width="2" stroke-linecap="round" />
       </g>
-      <text x="0" y="18" class="font-mono logo-lbl">HUGGINGFACE</text>
+      <text x="0" y="32" class="font-mono logo-lbl">HUGGINGFACE</text>
     </g>
 
-    <!-- ORBIT RING 2: RADIUS 200 (Inner Orbit - 3 Framework & Cloud Tools, offset by 45 deg) -->
+    <!-- ====================================================== -->
+    <!-- INNER ORBIT: RADIUS 250 (3 Core Frameworks & Cloud)    -->
+    <!-- ====================================================== -->
+
     <!-- Node 5: Python (at 45 deg) -->
     <g transform="rotate(45) translate(250, 0)">
       <animateTransform attributeName="transform" type="rotate" from="-45" to="-405" dur="50s" repeatCount="indefinite" additive="sum" />
-      <circle cx="0" cy="0" r="24" fill="#190B12" stroke="#701A3D" stroke-width="1.5" filter="url(#nodeShadow)" />
-      <circle cx="0" cy="0" r="21" fill="#451126" fill-opacity="0.5" />
-      <!-- Python dual-snake icon -->
-      <g transform="scale(0.8) translate(0, -2)">
-        <path d="M -8 -8 C -8 -13 0 -13 0 -8 L 0 -5 L -5 -5 C -10 -5 -10 0 -10 2 L -8 2 L -8 -3 C -8 -5 -5 -5 -3 -5 L 2 -5 L 2 -8 C 2 -13 -6 -13 -8 -8 Z" fill="#E5B5C7" />
-        <circle cx="-4" cy="-9" r="1.2" fill="#190B12" />
-        <path d="M 8 8 C 8 13 0 13 0 8 L 0 5 L 5 5 C 10 5 10 0 10 -2 L 8 -2 L 8 3 C 8 5 5 5 3 5 L -2 5 L -2 8 C -2 13 6 13 8 8 Z" fill="#C77B9B" />
-        <circle cx="4" cy="9" r="1.2" fill="#190B12" />
+      <g filter="url(#logoGlow)" transform="scale(1.6)">
+        <!-- Python dual-snake icon -->
+        <path d="M-8,-8 C-8,-14 0,-14 0,-8 L0,-4 L-5,-4 C-10,-4 -10,1 -10,3 L-8,3 L-8,-2 C-8,-4 -5,-4 -3,-4 L2,-4 L2,-8 C2,-14 -6,-14 -8,-8 Z" fill="#E5B5C7" />
+        <circle cx="-4" cy="-9.5" r="1.4" fill="#10070C" />
+        <path d="M8,8 C8,14 0,14 0,8 L0,4 L5,4 C10,4 10,-1 10,-3 L8,-3 L8,2 C8,4 5,4 3,4 L-2,4 L-2,8 C-2,14 6,14 8,8 Z" fill="#C77B9B" />
+        <circle cx="4" cy="9.5" r="1.4" fill="#10070C" />
       </g>
-      <text x="0" y="16" class="font-mono logo-lbl" font-size="7.5">PYTHON</text>
+      <text x="0" y="28" class="font-mono logo-lbl" font-size="9">PYTHON</text>
     </g>
 
     <!-- Node 6: FastAPI (at 165 deg) -->
     <g transform="rotate(165) translate(250, 0)">
       <animateTransform attributeName="transform" type="rotate" from="-165" to="-525" dur="50s" repeatCount="indefinite" additive="sum" />
-      <circle cx="0" cy="0" r="24" fill="#190B12" stroke="#701A3D" stroke-width="1.5" filter="url(#nodeShadow)" />
-      <circle cx="0" cy="0" r="21" fill="#451126" fill-opacity="0.5" />
-      <!-- FastAPI Lightning Bolt -->
-      <g transform="scale(0.85) translate(0, -2)">
-        <circle cx="0" cy="0" r="10" fill="none" stroke="#E5B5C7" stroke-width="1.5" />
-        <polygon points="1,-7 -5,1 0,1 -1,7 5,-1 0,-1" fill="#FFFFFF" />
+      <g filter="url(#logoGlow)" transform="scale(1.6)">
+        <!-- FastAPI Lightning Icon -->
+        <circle cx="0" cy="0" r="11" fill="none" stroke="#E5B5C7" stroke-width="1.8" />
+        <polygon points="1,-8 -6,1 0,1 -1,8 6,-1 0,-1" fill="#FFFFFF" />
       </g>
-      <text x="0" y="16" class="font-mono logo-lbl" font-size="7.5">FASTAPI</text>
+      <text x="0" y="28" class="font-mono logo-lbl" font-size="9">FASTAPI</text>
     </g>
 
-    <!-- Node 7: AWS / Cloud (at 285 deg) -->
+    <!-- Node 7: AWS (at 285 deg) -->
     <g transform="rotate(285) translate(250, 0)">
       <animateTransform attributeName="transform" type="rotate" from="-285" to="-645" dur="50s" repeatCount="indefinite" additive="sum" />
-      <circle cx="0" cy="0" r="24" fill="#190B12" stroke="#701A3D" stroke-width="1.5" filter="url(#nodeShadow)" />
-      <circle cx="0" cy="0" r="21" fill="#451126" fill-opacity="0.5" />
-      <!-- Cloud Icon with Smile Arrow -->
-      <g transform="scale(0.8) translate(0, -2)">
-        <path d="M -8 1 A 4 4 0 0 1 -4 -4 A 6 6 0 0 1 6 -4 A 5 5 0 0 1 9 1 Z" fill="#F8F0F3" />
-        <path d="M -8 6 Q 0 12 8 6" fill="none" stroke="#C77B9B" stroke-width="1.5" stroke-linecap="round" />
-        <polyline points="5,5 8,6 7,9" fill="none" stroke="#C77B9B" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+      <g filter="url(#logoGlow)" transform="scale(1.6)">
+        <!-- AWS Cloud & Smile Arrow -->
+        <path d="M-9,2 A5,5 0 0,1 -4,-4 A7,7 0 0,1 6,-4 A6,6 0 0,1 10,2 Z" fill="#FFFFFF" />
+        <path d="M-9,7 Q0,14 9,7" fill="none" stroke="#C77B9B" stroke-width="1.8" stroke-linecap="round" />
+        <polyline points="6,6 9,7 8,10" fill="none" stroke="#C77B9B" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
       </g>
-      <text x="0" y="16" class="font-mono logo-lbl" font-size="7.5">AWS</text>
+      <text x="0" y="28" class="font-mono logo-lbl" font-size="9">AWS</text>
     </g>
   </g>
 
@@ -172,9 +165,7 @@
 
   <!-- FOREGROUND ACCENT & RESTRAINED GYROSCOPE OVERLAY -->
   <g transform="translate(400, 360)">
-    <!-- Glowing Core Node at Chest/Center -->
     <circle cx="0" cy="0" r="5" fill="#F8F0F3" filter="url(#pGlow)" opacity="0.8" />
-    <!-- Subtle Orbiting Particle Ring -->
     <circle cx="0" cy="0" r="160" fill="none" stroke="#E5B5C7" stroke-width="1" stroke-dasharray="6,12" stroke-opacity="0.4">
       <animateTransform attributeName="transform" type="rotate" from="360" to="0" dur="30s" repeatCount="indefinite" />
     </circle>
