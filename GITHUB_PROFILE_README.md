@@ -5,13 +5,6 @@
 
 <br/><br/>
 
-<!-- Profile Avatar with Burgundy Identity -->
-<a href="https://linkedin.com/in/ashrafksalim">
-  <img src="assets/avatar.png" alt="Ashraf Khan" width="130" height="130" />
-</a>
-
-<br/><br/>
-
 <!-- Status & Identity Badges -->
 <a href="https://linkedin.com/in/ashrafksalim"><img src="https://img.shields.io/badge/LinkedIn-ashrafksalim-701A3D?style=for-the-badge&logo=linkedin&logoColor=F8F0F3&labelColor=10070C" alt="LinkedIn" /></a>
 <a href="mailto:ashrafksalim1@gmail.com"><img src="https://img.shields.io/badge/Email-ashrafksalim1%40gmail.com-451126?style=for-the-badge&logo=gmail&logoColor=F8F0F3&labelColor=10070C" alt="Email" /></a>
