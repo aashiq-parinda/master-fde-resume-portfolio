@@ -1,7 +1,7 @@
 <div align="center">
 
 <!-- Animated Burgundy Hero Banner -->
-<img src="assets/hero.svg?v=2" alt="Ashraf Khan - AI Forward Deployed Engineer | Senior Software &amp; Systems Engineer | LLMs, RAG, Agentic AI, Python, FastAPI | AWS | Flutter | Cloud-Native Systems" width="100%" />
+<img src="assets/hero-banner.svg" alt="Ashraf Khan - AI Forward Deployed Engineer | Senior Software &amp; Systems Engineer | LLMs, RAG, Agentic AI, Python, FastAPI | AWS | Flutter | Cloud-Native Systems" width="100%" />
 
 <br/><br/>
 
