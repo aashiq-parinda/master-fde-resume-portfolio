@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 72" width="100%" height="auto" role="img" aria-label="TECHNICAL TOOLKIT & COMPETENCIES">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 72" width="100%" height="auto" role="img" aria-label="TECHNICAL TOOLKIT &amp; COMPETENCIES">
   <defs>
 
     <!-- Background Gradients -->
@@ -90,9 +90,9 @@
     <text x="35" y="14" class="font-mono" font-size="11" font-weight="700" fill="#E5B5C7" text-anchor="middle" letter-spacing="1">[02]</text>
   </g>
 
-  <!-- Title & Subtitle -->
-  <text x="130" y="40" class="font-sans text-title" font-size="16">TECHNICAL TOOLKIT & COMPETENCIES</text>
-  <text x="130" y="58" class="font-sans text-sub" font-size="11.5">✦ Production Stacks, Autonomous Frameworks & Distributed Compute</text>
+  <!-- Title &amp; Subtitle -->
+  <text x="130" y="40" class="font-sans text-title" font-size="16">TECHNICAL TOOLKIT &amp; COMPETENCIES</text>
+  <text x="130" y="58" class="font-sans text-sub" font-size="11.5">✦ Production Stacks, Autonomous Frameworks &amp; Distributed Compute</text>
 
   <!-- Right Technical Status Badge -->
   <g transform="translate(730, 24)">
