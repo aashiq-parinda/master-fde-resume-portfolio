@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 880 340" width="100%" height="auto" role="img" aria-label="Ashraf Khan - Forward Deployed Engineer &amp; Multi-Cloud Solutions Architect">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 880 340" width="100%" height="auto" role="img" aria-label="Ashraf Khan - AI Forward Deployed Engineer | Senior Software &amp; Systems Engineer | LLMs, RAG, Agentic AI, Python, FastAPI | AWS | Flutter | Cloud-Native Systems">
   <defs>
     <!-- Background Gradients -->
     <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -127,7 +127,7 @@
         <animate attributeName="opacity" values="1;0.35;1" dur="2s" repeatCount="indefinite" />
         <animate attributeName="r" values="3.5;4.5;3.5" dur="2s" repeatCount="indefinite" />
       </circle>
-      <text x="28" y="17" class="font-mono tag-badge">FORWARD DEPLOYED · ARCHITECT</text>
+      <text x="28" y="17" class="font-mono tag-badge">AI FORWARD DEPLOYED ENGINEER</text>
     </g>
 
     <!-- Main Title: ASHRAF KHAN -->
@@ -138,14 +138,17 @@
     <rect x="0" y="94" width="500" height="2" fill="url(#beamGrad)" />
 
     <!-- Role / Positioning -->
-    <text x="0" y="126" class="font-sans hero-subtitle">FORWARD DEPLOYED ENGINEER · MULTI-CLOUD ARCHITECT · ENTERPRISE AI</text>
+    <text x="0" y="122" class="font-sans hero-subtitle" font-size="13" font-weight="700" letter-spacing="1">AI FORWARD DEPLOYED ENGINEER | SENIOR SOFTWARE &amp; SYSTEMS ENGINEER</text>
+
+    <!-- Core Stack / Capabilities -->
+    <text x="0" y="144" class="font-sans hero-desc" font-size="11.5" font-weight="600" fill="#E5B5C7" letter-spacing="0.2">LLMs, RAG, Agentic AI, Python, FastAPI | AWS | Flutter | Cloud-Native Systems</text>
 
     <!-- Technical Philosophy / Mission -->
-    <text x="0" y="152" class="font-sans hero-desc">Building resilient multi-cloud architectures, deterministic AI safety &amp; autonomous agent governance.</text>
+    <text x="0" y="166" class="font-sans hero-desc" font-size="11" fill="#C77B9B">Building resilient multi-cloud architectures, deterministic AI safety &amp; autonomous agent governance.</text>
 
     <!-- Animated Telemetry Waveform -->
-    <path d="M 0 178 Q 60 168, 120 178 T 240 178 T 360 178 T 480 178" fill="none" stroke="#701A3D" stroke-width="1.5" stroke-opacity="0.6" />
-    <path d="M 0 178 Q 60 164, 120 178 T 240 178 T 360 178 T 480 178" fill="none" stroke="#C77B9B" stroke-width="1.5" stroke-dasharray="80 140">
+    <path d="M 0 190 Q 60 180, 120 190 T 240 190 T 360 190 T 480 190" fill="none" stroke="#701A3D" stroke-width="1.5" stroke-opacity="0.6" />
+    <path d="M 0 190 Q 60 176, 120 190 T 240 190 T 360 190 T 480 190" fill="none" stroke="#C77B9B" stroke-width="1.5" stroke-dasharray="80 140">
       <animate attributeName="stroke-dashoffset" values="0;-220" dur="4s" repeatCount="indefinite" />
     </path>
   </g>

@@ -1,7 +1,7 @@
 <div align="center">
 
 <!-- Animated Burgundy Hero Banner -->
-<img src="assets/hero.svg" alt="Ashraf Khan - Forward Deployed Engineer &amp; Multi-Cloud Solutions Architect" width="100%" />
+<img src="assets/hero.svg" alt="Ashraf Khan - AI Forward Deployed Engineer | Senior Software &amp; Systems Engineer | LLMs, RAG, Agentic AI, Python, FastAPI | AWS | Flutter | Cloud-Native Systems" width="100%" />
 
 <br/><br/>
 
@@ -244,6 +244,8 @@
 
 **Technical Core:** **Hybrid RAG** combining sparse BM25 and dense clinical semantic vector embeddings via Reciprocal Rank Fusion ($k=60$), paired with a 6-cluster Contextual Cross-Encoder Reranker. Generates summaries with exact inline provenance citation markers (`[^1]`) linked to authoritative clinical guidelines with groundedness scoring. LLM-independent deterministic Python safety filter enforces a 100+ term medical blacklist, syntactic assertions, and PHI regex scrubbers with distributed span micro-tracing.
 
+**Key Metrics:** **0.0% Diagnostic Leakage Rate** (guaranteed), **100% Adversarial Injection Defense**, **90% Triage Concordance**, **87.5% Groundedness**, **p50 retrieval latency under 5ms**, physician reading time cut from 5m to **< 45s**, and **₹1.8 Crore/year administrative savings**.
+
 <a href="https://github.com/aashiq-parinda/master-fde-resume-portfolio/tree/main/healthcare-intake-summarization"><img src="https://img.shields.io/badge/Explore_Code-F8F0F3?style=for-the-badge&logo=github&logoColor=10070C&labelColor=701A3D" alt="Code" /></a>
 <a href="https://github.com/aashiq-parinda/master-fde-resume-portfolio/tree/main/healthcare-intake-summarization/docs/CASE_STUDY.md"><img src="https://img.shields.io/badge/Case_Study-F8F0F3?style=for-the-badge&logoColor=10070C&labelColor=451126" alt="Case Study" /></a>
 <a href="https://youtu.be/uo5pcuWYv-I"><img src="https://img.shields.io/badge/▶_YouTube_Demo-F8F0F3?style=for-the-badge&logo=youtube&logoColor=10070C&labelColor=701A3D" alt="Demo" /></a>
@@ -287,6 +289,8 @@
 
 **Technical Core:** LangGraph-compatible 8-node state graph orchestrator (`INGEST` ➡️ `DIAGNOSE` ➡️ `PLAN` ➡️ `APPROVAL_GATE` ➡️ `EXECUTE` ➡️ `VERIFY` ➡️ `FINALIZE` / `ROLLBACK`). Integrates a tool-calling registry, a Saga-pattern compensating transaction engine for automated rollback, an immutable append-only cryptographic audit ledger (SHA-256 chained hashing), and human-in-the-loop approval gating for high-risk interventions.
 
+**Key Metrics:** **87% MTTR Reduction** (from 24.5 min to 3.2 min), **100% HITL Approval Gate Enforcement**, **100% Tool Selection Accuracy**, and zero-tampering immutable audit compliance.
+
 <a href="https://github.com/aashiq-parinda/master-fde-resume-portfolio/tree/main/enterprise-operations-agent"><img src="https://img.shields.io/badge/Explore_Code-F8F0F3?style=for-the-badge&logo=github&logoColor=10070C&labelColor=701A3D" alt="Code" /></a>
 <a href="https://github.com/aashiq-parinda/master-fde-resume-portfolio/tree/main/projects/enterprise-operations-agent.md"><img src="https://img.shields.io/badge/Project_Profile-F8F0F3?style=for-the-badge&logoColor=10070C&labelColor=451126" alt="Profile" /></a>
 
@@ -324,6 +328,8 @@
 
 **Technical Core:** Parameter-efficient fine-tuning (LoRA) on `microsoft/deberta-v3-small` over the SEC LEDGAR dataset for clause classification; wrapped in a LangGraph state machine with Chroma RAG for precedent retrieval, LLM plain-English risk summarization, and confidence-threshold human escalation guardrails.
 
+**Key Metrics:** Deployed interactive **Hugging Face Space** evaluating classifier accuracy, macro-F1, per-category fairness metrics, and confidence-routed human-in-the-loop fallback queues.
+
 <a href="https://huggingface.co/spaces/ashrafksalim/contract-clause-risk-review"><img src="https://img.shields.io/badge/🤗_Live_Demo-F8F0F3?style=for-the-badge&logoColor=10070C&labelColor=701A3D" alt="HF Space" /></a>
 <a href="https://github.com/aashiq-parinda/LLM-Fine-Tuning-Agentic-Reasoning-for-Contract-Risk-Review"><img src="https://img.shields.io/badge/Explore_Code-F8F0F3?style=for-the-badge&logo=github&logoColor=10070C&labelColor=451126" alt="Code" /></a>
 
@@ -359,6 +365,8 @@
 **Enterprise Problem:** Automotive manufacturing stamping line lost **₹25.20 Crore/year** to unexpected hydraulic press valve failure and thermal runaway.
 
 **Technical Core:** Edge vibration, temperature, and RPM telemetry stream processed using statistical Z-scores, Redis sliding-window buffers, and an `IsolationForest` ML model for failure prediction. Built real-time sensor drift detection (**PSI** & **Kolmogorov-Smirnov test**), automated evaluation benchmark suite (ROC-AUC / PR-AUC), Prometheus `/metrics`, Kubernetes manifests, and Terraform IaC.
+
+**Key Metrics:** **12.4ms telemetry ingestion-to-detection latency**, **₹90 Lakhs/month net savings**, **421% Year 1 ROI**, **2.3-month payback period**, and **100% test pass rate across 19 unit tests**.
 
 <a href="https://github.com/aashiq-parinda/master-fde-resume-portfolio/tree/main/industrial-predictive-maintenance"><img src="https://img.shields.io/badge/Explore_Code-F8F0F3?style=for-the-badge&logo=github&logoColor=10070C&labelColor=701A3D" alt="Code" /></a>
 <a href="https://github.com/aashiq-parinda/master-fde-resume-portfolio/tree/main/industrial-predictive-maintenance/docs/CASE_STUDY.md"><img src="https://img.shields.io/badge/Case_Study-F8F0F3?style=for-the-badge&logoColor=10070C&labelColor=451126" alt="Case Study" /></a>
@@ -401,6 +409,8 @@
 
 **Technical Core:** Cryptographic SHA-256 idempotency locking (`PENDING`, `COMPLETED`, `FAILED` state machine), circuit breakers with exponential backoff and jitter, Dead Letter Queue (DLQ) replay engine, and active-passive automated multi-cloud failover/failback between AWS and Azure. Complete multi-cloud infrastructure abstraction built with Terraform.
 
+**Key Metrics:** **100% Data Preservation** via DLQ routing and idempotency, **₹4.5 Crore/year integration savings**, and documented multi-cloud financial model proving Azure Container Apps is **30.1% cheaper** than AWS ECS Fargate due to built-in ingress.
+
 <a href="https://github.com/aashiq-parinda/master-fde-resume-portfolio/tree/main/enterprise-integration-platform"><img src="https://img.shields.io/badge/Explore_Code-F8F0F3?style=for-the-badge&logo=github&logoColor=10070C&labelColor=701A3D" alt="Code" /></a>
 <a href="https://github.com/aashiq-parinda/master-fde-resume-portfolio/tree/main/enterprise-integration-platform/docs/CASE_STUDY.md"><img src="https://img.shields.io/badge/Case_Study-F8F0F3?style=for-the-badge&logoColor=10070C&labelColor=451126" alt="Case Study" /></a>
 <a href="https://youtu.be/45YbxMGYpEw"><img src="https://img.shields.io/badge/▶_YouTube_Demo-F8F0F3?style=for-the-badge&logo=youtube&logoColor=10070C&labelColor=701A3D" alt="Demo" /></a>
@@ -429,11 +439,11 @@
 <br/>
 
 <!-- ═══════════════════════════════════════════════════════════════════════════════ -->
-<!-- SECTION 04 · COMMERCIAL TRACK RECORD                                          -->
+<!-- SECTION 04 · PROFESSIONAL WORK                                                -->
 <!-- ═══════════════════════════════════════════════════════════════════════════════ -->
 
 <div align="center">
-<img src="assets/hdr-commercial.svg" alt="Commercial Deployments" width="100%" />
+<img src="assets/hdr-commercial.svg" alt="Professional Work - Commercial Deployments" width="100%" />
 </div>
 
 <br/>
